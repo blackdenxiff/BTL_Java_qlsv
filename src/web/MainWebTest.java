@@ -6,7 +6,7 @@ public class MainWebTest {
     public static void main(String[] args) {
         try {
             // Đường dẫn đến file HTML của bạn
-            File htmlFile = new File("src/web/test.html");
+            File htmlFile = new File("src/web/menu.html");
 
             if (htmlFile.exists()) {
                 // Lệnh này sẽ mở file bằng trình duyệt mặc định của máy tính
