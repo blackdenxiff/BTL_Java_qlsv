@@ -1,12 +1,12 @@
 package model.nconnguoi;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class SinhVien {
     private String maSV;
     private String hoDem;
     private String ten;
-    private Date ngaySinh;
+    private LocalDate ngaySinh;
     private String gioiTinh;
     private int namNhapHoc;
     private String maLop;
@@ -15,7 +15,9 @@ public class SinhVien {
     private String trangThaiSV;
     private String maHuyen;
 
-    public SinhVien(String maSV, String hoDem, String ten, Date ngaySinh, String gioiTinh, int namNhapHoc, String maLop, String sdt, String email, String trangThaiSV, String maHuyen) {
+    public SinhVien() {
+    }
+    public SinhVien(String maSV, String hoDem, String ten, LocalDate ngaySinh, String gioiTinh, int namNhapHoc, String maLop, String sdt, String email, String trangThaiSV, String maHuyen) {
         this.maSV = maSV;
         this.hoDem = hoDem;
         this.ten = ten;
@@ -53,11 +55,11 @@ public class SinhVien {
         this.ten = ten;
     }
 
-    public Date getNgaySinh() {
+    public LocalDate getNgaySinh() {
         return ngaySinh;
     }
 
-    public void setNgaySinh(Date ngaySinh) {
+    public void setNgaySinh(LocalDate ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
 
@@ -116,5 +118,4 @@ public class SinhVien {
     public void setMaHuyen(String maHuyen) {
         this.maHuyen = maHuyen;
     }
-
 }

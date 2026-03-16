@@ -5,7 +5,7 @@ public class ChuonTrinhDaoTao {
     private String tenCTDT;
     private int tongTinChi;
     private int namApDung;
-    private String maKhoa
+    private String maKhoa;
 
     public ChuonTrinhDaoTao(String maCTDT, String tenCTDT, int tongTinChi, int namApDung, String maKhoa) {
         this.maCTDT = maCTDT;
