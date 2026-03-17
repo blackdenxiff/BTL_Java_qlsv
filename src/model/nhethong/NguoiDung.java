@@ -7,6 +7,9 @@ public class NguoiDung {
     private String maSV; // Khóa ngoại (có thể null)
     private String maNV;
 
+    public NguoiDung(){
+
+    }
     public NguoiDung(String username, String matKhau, String usertype, String maSV, String maNV) {
         this.username = username;
         this.matKhau = matKhau;

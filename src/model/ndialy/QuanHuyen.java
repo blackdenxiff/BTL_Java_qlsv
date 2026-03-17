@@ -5,6 +5,9 @@ public class QuanHuyen {
     private String tenHuyen;
     private String maTinh;
 
+    public QuanHuyen(){
+
+    }
     public QuanHuyen(String maHuyen, String tenHuyen, String maTinh) {
         this.maHuyen = maHuyen;
         this.tenHuyen = tenHuyen;

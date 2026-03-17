@@ -7,6 +7,9 @@ public class MonHoc {
     private String loaiMon;
     private String maCTDT;
 
+    public MonHoc(){
+
+    }
     public MonHoc(String maMH, String tenMH, int soTC, String loaiMon, String maCTDT) {
         this.maMH = maMH;
         this.tenMH = tenMH;

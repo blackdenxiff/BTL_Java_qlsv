@@ -6,6 +6,9 @@ public class ThangDiem {
     private String diemChu;
     private String ghiChu;
 
+    public ThangDiem(){
+
+    }
     public ThangDiem(int idThangDiem, double mucDiem, String diemChu, String ghiChu) {
         this.idThangDiem = idThangDiem;
         this.mucDiem = mucDiem;

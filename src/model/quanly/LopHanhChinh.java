@@ -7,6 +7,17 @@ public class LopHanhChinh {
     private String maCTDT; // Khóa ngoại
     private String maNV;
 
+    public LopHanhChinh(){
+
+    }
+    public LopHanhChinh(String maLop, String nienKhoa, String tenLop, String maCTDT, String maNV) {
+        this.maLop = maLop;
+        this.nienKhoa = nienKhoa;
+        this.tenLop = tenLop;
+        this.maCTDT = maCTDT;
+        this.maNV = maNV;
+    }
+
     public String getMaLop() {
         return maLop;
     }

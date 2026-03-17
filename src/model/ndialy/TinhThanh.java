@@ -4,6 +4,9 @@ public class TinhThanh {
     private String maTinh;
     private String tenTinh;
 
+    public TinhThanh(){
+
+    }
     public TinhThanh(String maTinh, String tenTinh) {
         this.maTinh = maTinh;
         this.tenTinh = tenTinh;

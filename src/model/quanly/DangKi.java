@@ -6,6 +6,9 @@ public class DangKi {
     private double diemSo;
     private String trangThai;
 
+    public DangKi(){
+
+    }
     public DangKi(String maSV, String maLHP, double diemSo, String trangThai) {
         this.maSV = maSV;
         this.maLHP = maLHP;

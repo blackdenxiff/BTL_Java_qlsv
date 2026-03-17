@@ -6,27 +6,8 @@ import model.nconnguoi.SinhVien;
 
 import java.time.LocalDate;
 
-import static database.KNDatabase.ketNoiDatabase;
-
 public class Main {
     public static void main(String[] args) throws SQLServerException {
-        ketNoiDatabase();
-        // 1. Tạo đối tượng sinh viên mới
-        SinhVien sv = new SinhVien();
-        sv.setMaSV("SV001");
-        sv.setHoDem("Nguyễn Văn");
-        sv.setTen("An");
-        sv.setNgaySinh(LocalDate.of(2005, 5, 20));
-        sv.setGioiTinh("Nam");
-        sv.setNamNhapHoc(2023);
-        sv.setMaLop("K68-CNTT"); // Phải tồn tại trong bảng LopHanhChinh
-        sv.setSdt("0912345678");
-        sv.setEmail("an.nv@gmail.com");
-        sv.setTrangThaiSV("Đang học");
-        sv.setMaHuyen("H001"); // Phải tồn tại trong bảng QuanHuyen
 
-        // 2. Gọi DAO để lưu vào SQL Server
-        SinhVienDAO dao = new SinhVienDAO();
-        dao.insertSinhVien(sv);
     }
 }

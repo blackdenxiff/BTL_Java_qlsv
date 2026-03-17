@@ -4,6 +4,9 @@ public class Khoa {
     private String maKhoa;
     private String tenKhoa;
 
+    public Khoa(){
+
+    }
     public Khoa(String maKhoa, String tenKhoa) {
         this.maKhoa = maKhoa;
         this.tenKhoa = tenKhoa;

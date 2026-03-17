@@ -10,6 +10,9 @@ public class LopHocPhan {
     private String caHoc;
     private String phongHoc;
 
+    public LopHocPhan(){
+
+    }
     public LopHocPhan(String maLHP, int namHoc, int hocKy, int gioiHanSV, String maMH, String maNV, String caHoc, String phongHoc) {
         this.maLHP = maLHP;
         this.namHoc = namHoc;
