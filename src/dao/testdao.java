@@ -2,7 +2,7 @@ package dao;
 
 import model.nconnguoi.NhanVien;
 import model.nconnguoi.SinhVien;
-import dao.SinhVienDAO;
+import dao.nconnguoidao.SinhVienDAO;
 import model.ndialy.QuanHuyen;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ public class testdao {
         SinhVien sv = new SinhVien();
 
         //1. Tạo đối ượng sinh viên mới
-        sv.setMaSV("092383");
+        sv.setMaSV("092303");
         sv.setHoDem("Nguyễn Ngoc");
         sv.setTen("khanh");
         sv.setNgaySinh(LocalDate.of(2100, 5, 20));
