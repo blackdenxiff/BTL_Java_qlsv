@@ -9,10 +9,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class testdao {
     public static void main(String[] args){
-        SinhVien sv = new SinhVien();
+       /* SinhVien sv = new SinhVien();
 
         //1. Tạo đối ượng sinh viên mới
         sv.setMaSV("092303");
@@ -25,11 +26,34 @@ public class testdao {
         sv.setSdt("0912345678");
         sv.setEmail("an.nv@gmail.com");
         sv.setTrangThaiSV("Đang học");
-        sv.setMaHuyen("001"); // Phải tồn tại trong bảng QuanHuyen
+        sv.setMaHuyen("001"); // Phải tồn tại trong bảng QuanHuyen */
+
 
         // 2. Gọi DAO để lưu vào SQL Server
-        SinhVienDAO dao = new SinhVienDAO();
-        dao.insertSinhVien(sv);
+        SinhVienDAO svdao = new SinhVienDAO();
+        System.out.println("\n---------- TIM KIEM SINH VIEN THEO MA ----------");
+        String maCanTim = "01243"; // Thay bang mot ma co that trong DB cua ban
+        SinhVien svFound = svdao.getSinhVienByMa(maCanTim);
+
+        if (svFound != null) {
+            System.out.println("Da tim thay: " + svFound.getHoDem() + " " + svFound.getTen());
+            System.out.println("Email: " + svFound.getEmail());
+        } else {
+            System.out.println("Khong tim thay sinh vien co ma: " + maCanTim);
+        }
+
+       /*List<SinhVien> ds = svdao.getAllSinhVien();
+        if (ds.isEmpty()) {
+            System.out.println("Thong bao: Khong co du lieu sinh vien trong Database.");
+        } else {
+            for (SinhVien sv : ds) {
+                System.out.println("Ma SV: " + sv.getMaSV()
+                        + " | Ho ten: " + sv.getHoDem() + " " + sv.getTen()
+                        + " | Lop: " + sv.getMaLop()
+                        + " | Ngay sinh: " + sv.getNgaySinh());
+            }
+        } */
+        //svdao.insertSinhVien(sv);
 
 
         //SinhVienDAO svd = new SinhVienDAO();

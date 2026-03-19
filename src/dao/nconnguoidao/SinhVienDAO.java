@@ -3,11 +3,9 @@ package dao.nconnguoidao;
 import database.KNDatabase;
 import model.nconnguoi.SinhVien;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Date;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SinhVienDAO {
 
@@ -116,5 +114,69 @@ public class SinhVienDAO {
         } catch (SQLException e) {
             System.err.println("Lỗi khi cập nhật dữ liệu: " + e.getMessage());
         }
+    }
+
+    // Lay toan bo danh sach sinh vien
+    public List<SinhVien> getAllSinhVien() {
+        List<SinhVien> list = new ArrayList<>();
+        String sql = "SELECT * FROM SinhVien";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                SinhVien sv = new SinhVien();
+                sv.setMaSV(rs.getString("MaSV"));
+                sv.setHoDem(rs.getString("HoDem"));
+                sv.setTen(rs.getString("Ten"));
+
+                // Chuyen doi tu sql.Date sang LocalDate
+                if (rs.getDate("NgaySinh") != null) {
+                    sv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                }
+
+                sv.setGioiTinh(rs.getString("GioiTinh"));
+                sv.setMaLop(rs.getString("MaLop"));
+                sv.setMaHuyen(rs.getString("MaHuyen"));
+                sv.setSdt(rs.getString("SDT"));
+                sv.setEmail(rs.getString("Email"));
+
+                list.add(sv);
+            }
+        } catch (SQLException e) {
+            System.out.println("Loi khi lay danh sach sinh vien: " + e.getMessage());
+        }
+        return list;
+    }
+    //tim 1 sinh vien
+    public SinhVien getSinhVienByMa(String maSV) {
+        String sql = "SELECT * FROM SinhVien WHERE MaSV = ?";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maSV);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    SinhVien sv = new SinhVien();
+                    sv.setMaSV(rs.getString("MaSV"));
+                    sv.setHoDem(rs.getString("HoDem"));
+                    sv.setTen(rs.getString("Ten"));
+                    if (rs.getDate("NgaySinh") != null) {
+                        sv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                    }
+                    sv.setGioiTinh(rs.getString("GioiTinh"));
+                    sv.setMaLop(rs.getString("MaLop"));
+                    sv.setMaHuyen(rs.getString("MaHuyen"));
+                    sv.setSdt(rs.getString("SDT"));
+                    sv.setEmail(rs.getString("Email"));
+                    return sv;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Loi khi tim sinh vien theo ma: " + e.getMessage());
+        }
+        return null;
     }
 }

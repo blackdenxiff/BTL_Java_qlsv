@@ -3,14 +3,13 @@ package dao.nconnguoidao;
 import database.KNDatabase;
 import model.nconnguoi.NhanVien;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NhanVienDAO {
 
-        public void insertNhanVien(NhanVien nv){
+    public void insertNhanVien(NhanVien nv){
             String sql = "INSERT INTO NhanVien (MaNV, HoDem, Ten, NgaySinh, GioiTinh, LoaiNV, MaKhoa, HocVan, SDT, Email)"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -121,4 +120,70 @@ public class NhanVienDAO {
             System.err.println("Mẹo: Kiểm tra xem nhân viên này có đang quản lý lớp nào không trước khi xóa.");
         }
     }
+
+    public List<NhanVien> getAllNhanVien() {
+        List<NhanVien> list = new ArrayList<>();
+        String sql = "SELECT * FROM NhanVien";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getString("MaNV"));
+                nv.setHoDem(rs.getString("HoDem"));
+                nv.setTen(rs.getString("Ten"));
+
+                if (rs.getDate("NgaySinh") != null) {
+                    nv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                }
+
+                nv.setGioiTinh(rs.getString("GioiTinh"));
+                nv.setLoaiNV(rs.getString("LoaiNV"));
+                nv.setMaKhoa(rs.getString("MaKhoa"));
+                nv.setHocVan(rs.getString("HocVan"));
+                nv.setSdt(rs.getString("SDT"));
+                nv.setEmail(rs.getString("Email"));
+
+                list.add(nv);
+            }
+        } catch (SQLException e) {
+            System.out.println("Loi khi lay danh sach nhan vien: " + e.getMessage());
+        }
+        return list;
+    }
+
+    public NhanVien getNhanVienByMa(String maNV) {
+        String sql = "SELECT * FROM NhanVien WHERE MaNV = ?";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maNV);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    NhanVien nv = new NhanVien();
+                    nv.setMaNV(rs.getString("MaNV"));
+                    nv.setHoDem(rs.getString("HoDem"));
+                    nv.setTen(rs.getString("Ten"));
+                    if (rs.getDate("NgaySinh") != null) {
+                        nv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                    }
+                    nv.setGioiTinh(rs.getString("GioiTinh"));
+                    nv.setLoaiNV(rs.getString("LoaiNV"));
+                    nv.setMaKhoa(rs.getString("MaKhoa"));
+                    nv.setHocVan(rs.getString("HocVan"));
+                    nv.setSdt(rs.getString("SDT"));
+                    nv.setEmail(rs.getString("Email"));
+                    return nv;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Loi khi tim nhan vien theo ma: " + e.getMessage());
+        }
+        return null;
+    }
+
+
 }
