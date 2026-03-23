@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="TOP_CENTER" spacing="20" styleClass="main-background"
+      stylesheets="@LoginCSS.css" xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.security.LoginController">
+
+    <VBox alignment="CENTER">
+        <padding><Insets top="50" bottom="10"/></padding>
+        <children>
+            <ImageView fitWidth="380.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@imge/logo_login.png" />
+                </image>
+            </ImageView>
+        </children>
+    </VBox>
+
+    <VBox alignment="CENTER" spacing="15" maxWidth="420" styleClass="login-card">
+        <padding><Insets bottom="35" left="45" right="45" top="35"/></padding>
+
+        <Label text="ĐĂNG NHẬP" styleClass="title-login" />
+
+        <TextField fx:id="usernameField" promptText="Mã sinh viên / Tài khoản" styleClass="input-field"/>
+
+        <PasswordField fx:id="passwordField" promptText="Mật khẩu" styleClass="input-field" onAction="#handleLoginButtonAction"/>
+
+        <Label fx:id="messageLabel" wrapText="true" textAlignment="CENTER" minHeight="20.0" />
+
+        <HBox alignment="CENTER_LEFT">
+            <Hyperlink text="Quên mật khẩu?" styleClass="link-text"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Hyperlink text="Trợ giúp?" styleClass="link-text"/>
+        </HBox>
+
+        <Button text="ĐĂNG NHẬP" onAction="#handleLoginButtonAction" maxWidth="Infinity" styleClass="login-button"/>
+
+        <Separator />
+        <Label text="Hoặc đăng nhập" styleClass="label-or"/>
+
+        <Button text="Sign in using Microsoft" maxWidth="Infinity" styleClass="microsoft-button"/>
+    </VBox>
+</VBox>

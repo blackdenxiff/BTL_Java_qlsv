@@ -1,9 +1,11 @@
 package dao;
 
+import dao.nhethongdao.NguoiDungDao;
 import model.nconnguoi.NhanVien;
 import model.nconnguoi.SinhVien;
 import dao.nconnguoidao.SinhVienDAO;
 import model.ndialy.QuanHuyen;
+import model.nhethong.NguoiDung;
 
 import java.awt.*;
 import java.io.File;
@@ -29,7 +31,7 @@ public class testdao {
         sv.setMaHuyen("001"); // Phải tồn tại trong bảng QuanHuyen */
 
 
-        // 2. Gọi DAO để lưu vào SQL Server
+      /*  // 2. Gọi DAO để lưu vào SQL Server
         SinhVienDAO svdao = new SinhVienDAO();
         System.out.println("\n---------- TIM KIEM SINH VIEN THEO MA ----------");
         String maCanTim = "01243"; // Thay bang mot ma co that trong DB cua ban
@@ -40,7 +42,7 @@ public class testdao {
             System.out.println("Email: " + svFound.getEmail());
         } else {
             System.out.println("Khong tim thay sinh vien co ma: " + maCanTim);
-        }
+        }*/
 
        /*List<SinhVien> ds = svdao.getAllSinhVien();
         if (ds.isEmpty()) {
@@ -90,5 +92,13 @@ public class testdao {
 
          */
 
+        NguoiDung nd = new NguoiDung();
+        nd.setUsername("admin2");
+        nd.setMatKhau("1234");
+        nd.setUsertype("AD");
+        nd.setMaNV("");
+        nd.setMaSV("");
+        NguoiDungDao ndd = new NguoiDungDao();
+        ndd.insertNguoiDung(nd);
     }
 }

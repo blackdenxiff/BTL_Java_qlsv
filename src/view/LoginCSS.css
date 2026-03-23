@@ -1,0 +1,49 @@
+/* Nền xanh đậm phía sau */
+.main-background {
+    -fx-background-color: #00337C; /* Màu xanh của trường GTVT */
+}
+
+/* Thẻ đăng nhập bo góc */
+.login-card {
+    -fx-background-color: #E8F0FE;
+    -fx-background-radius: 30;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+
+/* Kiểu chữ tiêu đề */
+.title-login {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #00337C;
+}
+
+/* Các ô nhập liệu */
+.input-field {
+    -fx-background-radius: 10;
+    -fx-pref-height: 45;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10;
+    -fx-padding: 0 10 0 10;
+}
+
+/* Nút đăng nhập */
+.login-button {
+    -fx-background-color: #1A3066;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-pref-height: 45;
+    -fx-cursor: hand;
+}
+
+.login-button:hover {
+    -fx-background-color: #25428C;
+}
+
+/* Nút Microsoft */
+.microsoft-button {
+    -fx-background-color: #004792;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-pref-height: 45;
+}
