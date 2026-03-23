@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <Label text="Quản lý Tài khoản &amp; Phân quyền" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+
+    <HBox spacing="10">
+        <Button text="+ Tạo mới" />
+        <Button text=" Nhập từ Excel" style="-fx-background-color: #27ae60; -fx-text-fill: white;" />
+        <TextField placeholder="Tìm kiếm tài khoản..." HBox.hgrow="ALWAYS" />
+    </HBox>
+
+    <TableView VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Mã số" prefWidth="100" />
+            <TableColumn text="Họ tên" prefWidth="200" />
+            <TableColumn text="Vai trò" prefWidth="120" />
+            <TableColumn text="Trạng thái" prefWidth="100" />
+            <TableColumn text="Thao tác" prefWidth="150" />
+        </columns>
+    </TableView>
+</VBox>

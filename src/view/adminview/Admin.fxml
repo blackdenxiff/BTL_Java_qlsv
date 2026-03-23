@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@AdminCSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.adminc.AdminDashboardController">
+
+    <left>
+        <VBox spacing="10" styleClass="sidebar" prefWidth="250">
+            <Label text="ADMIN PANEL" styleClass="sidebar-title" />
+
+            <Button fx:id="btnAccounts" text="1. Tài khoản &amp; Phân quyền" onAction="#switchPage" maxWidth="Infinity" />
+            <Button fx:id="btnSystem" text="2. Tổ chức &amp; Hệ thống" onAction="#switchPage" maxWidth="Infinity" />
+            <Button fx:id="btnTraining" text="3. Đào tạo &amp; Nhân sự" onAction="#switchPage" maxWidth="Infinity" />
+            <Button fx:id="btnFinance" text="4. Tài chính &amp; Học phí" onAction="#switchPage" maxWidth="Infinity" />
+            <Button fx:id="btnStats" text="5. Thống kê &amp; Báo cáo" onAction="#switchPage" maxWidth="Infinity" />
+
+            <Region VBox.vgrow="ALWAYS" />
+            <Button text="Đăng xuất" styleClass="btn-logout" maxWidth="Infinity" />
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentArea">
+            <Label text="Chào mừng Admin! Chọn menu để bắt đầu." />
+        </StackPane>
+    </center>
+
+</BorderPane>

@@ -1,6 +1,5 @@
 package main;
 
-import database.KNDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,13 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 // Mọi ứng dụng JavaFX đều phải kế thừa lớp Application
-public class MainApp extends Application {
+public class MainTestLogin extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Tải cấu trúc UI từ tệp login.fxml
         // Lưu ý: Đảm bảo đường dẫn file fxml chính xác với cấu trúc thư mục của bạn
-        java.net.URL fxmlLocation = getClass().getResource("/view/Login.fxml");
+        java.net.URL fxmlLocation = getClass().getResource("/view/securityview/Login.fxml");
         Parent root = null;
         if (fxmlLocation == null) {
             System.err.println("LỖI: Không tìm thấy file FXML! Hãy kiểm tra lại đường dẫn.");

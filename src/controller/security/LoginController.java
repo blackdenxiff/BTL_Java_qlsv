@@ -15,7 +15,7 @@ public class LoginController {
     @FXML private PasswordField passwordField;
     @FXML private Label messageLabel;
 
-    // Lưu ý: Đừng để @FXML trên đối tượng DAO nhé, vì nó không phải thành phần giao diện
+
     private NguoiDungDao nguoiDungDao = new NguoiDungDao();
 
     @FXML
@@ -34,7 +34,6 @@ public class LoginController {
         boolean isSuccess = nguoiDungDao.checkLogin(user, pass);
 
         if (isSuccess) {
-
             messageLabel.setText("Đăng nhập thành công! Đang chuyển hướng...");
             messageLabel.setStyle("-fx-text-fill: #2ecc71;"); // Màu xanh lá hiện đại
             // Logic chuyển màn hình ở đây
