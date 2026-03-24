@@ -22,11 +22,18 @@ public class AdminDashboardController {
 
         String fxmlFile = "";
 
-        if (menuText.contains("1.")) fxmlFile = "view/adminview/AccountManager.fxml";
-       // else if (menuText.contains("2.")) fxmlFile = "/view/SystemConfig.fxml";
+        // Thêm điều kiện chuyển sang AccountManager.fxml
+        if (menuText.contains("1. Tài khoản &amp; Phân quyền")) {
+            fxmlFile = "/view/adminview/AccountManager.fxml";
+        }
+        // else if (menuText.contains("2.")) fxmlFile = "/view/SystemConfig.fxml";
         // ... thêm các điều kiện khác cho 3, 4, 5
 
-        loadFXML(fxmlFile);
+        if (!fxmlFile.isEmpty()) {
+            loadFXML(fxmlFile);
+        } else {
+            System.err.println("Không xác định được file FXML cho menu: " + menuText);
+        }
     }
 
     private void loadFXML(String fxmlFile) {

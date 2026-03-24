@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class NguoiDungDao {
+public class NguoiDungDAO {
     public void insertNguoiDung(NguoiDung nd) {
         String sql = "INSERT INTO NguoiDung (username, matKhau, usertype, maSV, maNV) VALUES (?, ?, ?, ?, ?)";
 

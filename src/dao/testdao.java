@@ -1,17 +1,7 @@
 package dao;
 
-import dao.nhethongdao.NguoiDungDao;
-import model.nconnguoi.NhanVien;
-import model.nconnguoi.SinhVien;
-import dao.nconnguoidao.SinhVienDAO;
-import model.ndialy.QuanHuyen;
+import dao.nhethongdao.NguoiDungDAO;
 import model.nhethong.NguoiDung;
-
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
 
 public class testdao {
     public static void main(String[] args){
@@ -98,7 +88,7 @@ public class testdao {
         nd.setUsertype("AD");
         nd.setMaNV("");
         nd.setMaSV("");
-        NguoiDungDao ndd = new NguoiDungDao();
+        NguoiDungDAO ndd = new NguoiDungDAO();
         ndd.insertNguoiDung(nd);
     }
 }
