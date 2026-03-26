@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NguoiDungDAO {
     public void insertNguoiDung(NguoiDung nd) {
@@ -120,4 +122,55 @@ public class NguoiDungDAO {
 
         return null;
     }
+
+    // 1. Lấy thông tin một người dùng theo username
+    public NguoiDung getNguoiDungByUsername(String username) {
+        String sql = "SELECT * FROM NguoiDung WHERE username = ?";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                NguoiDung nd = new NguoiDung();
+                nd.setUsername(rs.getString("username"));
+                nd.setMatKhau(rs.getString("matKhau"));
+                nd.setUsertype(rs.getString("usertype"));
+                nd.setMaSV(rs.getString("maSV"));
+                nd.setMaNV(rs.getString("maNV"));
+                return nd;
+            }
+        } catch (SQLException e) {
+            System.out.println("Loi lay nguoi dung: " + e.getMessage());
+        }
+        return null; // Trả về null nếu không tìm thấy
+    }
+
+    // 2. Lấy danh sách tất cả người dùng
+    public List<NguoiDung> getAllNguoiDung() {
+        List<NguoiDung> danhSach = new ArrayList<>();
+        String sql = "SELECT * FROM NguoiDung";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                NguoiDung nd = new NguoiDung();
+                nd.setUsername(rs.getString("username"));
+                nd.setMatKhau(rs.getString("matKhau"));
+                nd.setUsertype(rs.getString("usertype"));
+                nd.setMaSV(rs.getString("maSV"));
+                nd.setMaNV(rs.getString("maNV"));
+
+                danhSach.add(nd);
+            }
+        } catch (SQLException e) {
+            System.out.println("Loi lay danh sach: " + e.getMessage());
+        }
+        return danhSach;
+    }
+
 }

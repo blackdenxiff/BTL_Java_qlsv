@@ -16,7 +16,8 @@
             <Button fx:id="btnStats" text="5. Thống kê &amp; Báo cáo" onAction="#switchPage" maxWidth="Infinity" />
 
             <Region VBox.vgrow="ALWAYS" />
-            <Button text="Đăng xuất" styleClass="btn-logout" maxWidth="Infinity" />
+            <Button fx:id="btnChangePassword" text="Đổi mật khẩu" styleClass="btn-change-password" maxWidth="Infinity" onAction="#switchPage" />
+            <Button text="Đăng xuất" styleClass="btn-logout" maxWidth="Infinity" onAction="#handleLogout" />
         </VBox>
     </left>
 

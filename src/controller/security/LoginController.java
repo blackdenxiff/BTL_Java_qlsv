@@ -41,7 +41,7 @@ public class LoginController {
         if (isSuccess) {
             // 2. Lấy loại người dùng để biết đi đâu (AD, NV, SV)
             String userType = nguoiDungDao.getUserType(user);
-
+            model.nhethong.UserSession.saveSession(user, userType);
             messageLabel.setText("Đăng nhập thành công!");
             messageLabel.setStyle("-fx-text-fill: #2ecc71;");
 

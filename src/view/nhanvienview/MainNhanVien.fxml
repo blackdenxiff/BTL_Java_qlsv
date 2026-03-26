@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane prefWidth="1100" prefHeight="700"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.nhanvien.MainNhanVienController"
+            stylesheets="@NhanVienCSS.css">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox spacing="15" prefWidth="230" styleClass="sidebar">
+
+            <!-- LOGO -->
+            <VBox alignment="CENTER" spacing="10">
+                <ImageView fitHeight="80" fitWidth="80">
+                    <image>
+                        <Image url="@../imge/logo.png"/>
+                    </image>
+                </ImageView>
+                <Label text="GTVT UNIVERSITY" styleClass="logo-text"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- MENU -->
+            <Label text="GIẢNG DẠY" styleClass="menu-group"/>
+            <Button text="Đăng ký lớp" onAction="#dangKyLop"/>
+            <Button text="Quản lý lớp học phần" onAction="#quanLyLop"/>
+            <Button text="Nhập điểm" onAction="#nhapDiem"/>
+            <Button text="Sửa điểm" onAction="#suaDiem"/>
+
+            <Label text="SINH VIÊN" styleClass="menu-group"/>
+            <Button text="Danh sách sinh viên"/>
+            <Button text="Tra cứu thông tin"/>
+            <Button text="Kết quả học tập"/>
+
+            <Label text="CỐ VẤN" styleClass="menu-group"/>
+            <Button text="Lớp hành chính"/>
+            <Button text="Tiến độ sinh viên"/>
+            <Button text="Cảnh báo học vụ"/>
+
+            <Label text="LỊCH" styleClass="menu-group"/>
+            <Button text="Lịch dạy"/>
+            <Button text="Lịch thi"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Button text="Đăng xuất" styleClass="logout"/>
+
+        </VBox>
+    </left>
+
+    <!-- HEADER -->
+    <top>
+        <HBox styleClass="header" alignment="CENTER_RIGHT">
+            <Label text="Xin chào Giảng viên 👋" styleClass="header-text"/>
+        </HBox>
+    </top>
+
+    <!-- CONTENT -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content">
+            <Label text="Dashboard Giảng viên" styleClass="welcome"/>
+        </StackPane>
+    </center>
+
+</BorderPane>
