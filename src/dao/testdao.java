@@ -1,8 +1,6 @@
 package dao;
 
-import dao.nconnguoidao.SinhVienDAO;
 import dao.nhethongdao.NguoiDungDAO;
-import model.nconnguoi.SinhVien;
 import model.nhethong.NguoiDung;
 
 public class testdao {
@@ -84,14 +82,13 @@ public class testdao {
 
          */
 
-       /* NguoiDung nd = new NguoiDung();
-        nd.setUsername("admin2");
+        NguoiDung nd = new NguoiDung();
+        nd.setUsername("depzai");
         nd.setMatKhau("1234");
-        nd.setUsertype("AD");
-        nd.setMaNV("");
+        nd.setUsertype("NV");
+        nd.setMaNV("NV001");
         nd.setMaSV("");
         NguoiDungDAO ndd = new NguoiDungDAO();
-        ndd.insertNguoiDung(nd);*/
-
+        ndd.insertNguoiDung(nd);
     }
 }

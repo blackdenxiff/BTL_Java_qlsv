@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.adminc.SystemTrainingController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="QUẢN LÝ TỔ CHỨC &amp; ĐÀO TẠO"
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="txtSearch" promptText="Tìm kiếm trong danh sách hiện tại..." prefWidth="300" style="-fx-background-radius: 15;"/>
+        <Region HBox.hgrow="ALWAYS" />
+
+        <MenuButton text="Tác vụ dữ liệu" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;">
+            <items>
+                <MenuItem text="Thêm mới" onAction="#handleAdd" />
+                <MenuItem text="Sửa thông tin" onAction="#handleEdit" />
+                <SeparatorMenuItem />
+                <MenuItem text="Xóa (Tạm thời)" onAction="#handleDelete" style="-fx-text-fill: #e74c3c; -fx-font-weight: bold;" />
+                <MenuItem text="Khôi phục dữ liệu (Thùng rác)" onAction="#handleRestore" style="-fx-text-fill: #2ecc71;" />
+            </items>
+        </MenuButton>
+    </HBox>
+
+    <SplitPane VBox.vgrow="ALWAYS" dividerPositions="0.25" style="-fx-background-color: transparent;">
+        <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5;">
+            <Label text="Sơ đồ tổ chức (Cây thư mục)" style="-fx-font-weight: bold;"/>
+            <TreeView fx:id="treeNavigation" VBox.vgrow="ALWAYS" style="-fx-border-color: transparent;" />
+        </VBox>
+
+        <VBox spacing="10" style="-fx-padding: 0 0 0 10;">
+            <TableView fx:id="tableDetails" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;">
+                <placeholder>
+                    <Label text="Vui lòng chọn một mục từ Sơ đồ tổ chức bên trái"/>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </SplitPane>
+</VBox>

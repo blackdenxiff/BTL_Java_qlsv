@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.nhanvien.LopHocPhanController"
+      spacing="20"
+      style="-fx-padding: 20; -fx-background-color: #f4f6f9;">
+
+    <!-- TITLE -->
+    <Label text="QUẢN LÝ LỚP HỌC PHẦN"
+           style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <!-- CARD NHẬP THÔNG TIN -->
+    <VBox spacing="15"
+          style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+
+        <GridPane hgap="10" vgap="10">
+
+            <Label text="Mã LHP:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtMaLHP" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Mã GV:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtMaGV" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Ca học:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtCaHoc" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Phòng:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtPhong" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Học kỳ:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtHocKy" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Năm học:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtNamHoc" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        </GridPane>
+
+        <Button text="Phân công giảng dạy"
+                onAction="#handlePhanCong"
+                style="-fx-background-color: #1e3c72; -fx-text-fill: white; -fx-background-radius: 8; -fx-pref-height: 40;"/>
+    </VBox>
+
+    <!-- CARD XUẤT FILE -->
+    <VBox spacing="15"
+          style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+
+        <Label text="Xuất danh sách điểm danh"
+               style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+        <HBox spacing="10">
+            <TextField fx:id="txtMaLHPExport" promptText="Mã LHP"/>
+            <TextField fx:id="txtFile" promptText="Tên file (vd: diem_danh.txt)"/>
+            <Button text="Xuất file"
+                    onAction="#handleXuat"
+                    style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+        </HBox>
+
+    </VBox>
+
+</VBox>

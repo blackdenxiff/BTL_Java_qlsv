@@ -30,3 +30,29 @@
 .table-view {
     -fx-background-color: white;
 }
+
+//////
+/* Trạng thái bình thường: Hơi mờ và nhạt */
+.search-field {
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-opacity: 0.6; /* Độ mờ khi chưa chạm vào (nhạt) */
+}
+
+/* Trạng thái khi di chuột vào: Hiện rõ và đậm màu */
+.search-field:hover {
+    -fx-opacity: 1.0; /* Hiện rõ 100% (đậm) */
+    -fx-background-color: #ffffff;
+    -fx-border-color: #3498db; /* Viền xanh sáng lên */
+    -fx-cursor: text;
+}
+
+/* Trạng thái khi đang nhấn vào để gõ (Focus) */
+.search-field:focused {
+    -fx-opacity: 1.0;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2980b9;
+    -fx-border-width: 2px;
+}

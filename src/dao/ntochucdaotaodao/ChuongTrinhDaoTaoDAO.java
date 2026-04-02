@@ -1,10 +1,13 @@
 package dao.ntochucdaotaodao;
 
 import database.KNDatabase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.ntochucdaotao.ChuonTrinhDaoTao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChuongTrinhDaoTaoDAO {
@@ -63,7 +66,8 @@ public class ChuongTrinhDaoTaoDAO {
 
     // 3. Ham Xoa (Delete)
     public void deleteCTDT(String maCTDT) {
-        String sql = "DELETE FROM ChuongTrinhDaoTao WHERE MaCTDT = ?";
+        // Đổi DELETE thành UPDATE isDeleted = 1
+        String sql = "UPDATE ChuongTrinhDaoTao SET isDeleted = 1 WHERE MaCTDT = ?";
 
         try (Connection conn = KNDatabase.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -74,14 +78,70 @@ public class ChuongTrinhDaoTaoDAO {
 
             int rows = pstmt.executeUpdate();
             if (rows > 0) {
-                System.out.println("Xoa chuong trinh dao tao " + maCTDT + " thanh cong!");
+                System.out.println("Da chuyen CTDT " + maCTDT + " vao thung rac (Xoa mem)!");
             } else {
                 System.out.println("Thong bao: Khong tim thay MaCTDT de xoa.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Loi khi xoa chuong trinh dao tao: " + e.getMessage());
-            System.out.println("Luu y: Kiem tra xem co Lop Hanh Chinh nao dang thuoc chuong trinh nay khong.");
+            System.out.println("Loi khi xoa mem CTDT: " + e.getMessage());
         }
+    }
+
+    public ObservableList<ChuonTrinhDaoTao> searchCTDT(String keyword) {
+        ObservableList<ChuonTrinhDaoTao> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM ChuongTrinhDaoTao WHERE MaCTDT LIKE ? OR TenCTDT LIKE ?";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + keyword + "%" );
+            pstmt.setString(2, "%" + keyword + "%" );
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                list.add(new ChuonTrinhDaoTao(
+                        rs.getString("MaCTDT"), rs.getString("TenCTDT"),
+                        rs.getInt("TongTinChi"), rs.getInt("NamApDung"), rs.getString("MaKhoa")
+                ));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
+    }
+
+    public ObservableList<ChuonTrinhDaoTao> getCTDTByKhoa(String maKhoa) {
+        ObservableList<ChuonTrinhDaoTao> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM ChuongTrinhDaoTao WHERE MaKhoa = ?";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, maKhoa);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                list.add(new ChuonTrinhDaoTao(
+                        rs.getString("MaCTDT"), rs.getString("TenCTDT"),
+                        rs.getInt("TongTinChi"), rs.getInt("NamApDung"), rs.getString("MaKhoa")
+                ));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
+    }
+
+    public ObservableList<ChuonTrinhDaoTao> getAllCTDT() {
+        ObservableList<ChuonTrinhDaoTao> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM ChuongTrinhDaoTao";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new ChuonTrinhDaoTao(
+                        rs.getString("MaCTDT"),
+                        rs.getString("TenCTDT"),
+                        rs.getInt("TongTinChi"),
+                        rs.getInt("NamApDung"),
+                        rs.getString("MaKhoa")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

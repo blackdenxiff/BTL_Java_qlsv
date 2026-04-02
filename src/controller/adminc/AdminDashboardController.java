@@ -7,30 +7,33 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.nhethong.UserSession;
-
 import java.io.IOException;
 import java.util.Objects;
 
 public class AdminDashboardController {
 
-    @FXML
-    private StackPane contentArea;
+    @FXML private StackPane contentArea;
+    @FXML private Button btnAccounts, btnSystem, btnTraining, btnFinance, btnStats, btnChangePassword;
 
     @FXML
     private void switchPage(ActionEvent event) {
-        Button btn = (Button) event.getSource();
-        String menuText = btn.getText();
+        Object source = event.getSource();
         String fxmlFile = "";
 
-        // 1. Kiểm tra điều kiện trỏ đến các trang quản lý
-        if (menuText.contains("1. Tài khoản & Phân quyền")) {
+        // Sửa lại đường dẫn chuẩn (bỏ /src)
+        if (source == btnAccounts) {
             fxmlFile = "/view/adminview/AccountManager.fxml";
-        }
-        // 2. Kiểm tra nếu nhấn nút "Đổi mật khẩu"
-        else if (menuText.equalsIgnoreCase("Đổi mật khẩu")) {
+        } else if (source == btnSystem) {
+            fxmlFile = "/view/adminview/SystemTrainingManager.fxml";
+        } else if (source == btnFinance) {
+            fxmlFile = "/view/adminview/FinanceManager.fxml";
+        } else if (source == btnStats) {
+            fxmlFile = "/view/adminview/ReportManager.fxml";
+        } else if (source == btnChangePassword) {
             fxmlFile = "/view/securityview/ChangePassword.fxml";
         }
 
@@ -39,36 +42,37 @@ public class AdminDashboardController {
         }
     }
 
-    // Hàm xử lý Đăng xuất
-    @FXML
-    private void handleLogout(ActionEvent event) {
+    private void loadFXML(String fxmlFile) {
         try {
-            // Xóa dữ liệu phiên đăng nhập
-            UserSession.clear();
+            // Sử dụng FXMLLoader để có quyền kiểm soát tốt hơn
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
 
-            // Lấy Stage hiện tại từ nút bấm và đóng nó lại
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
+            // Ép kích thước nội dung khớp với vùng trắng (StackPane)
+            if (root instanceof Region) {
+                ((Region) root).prefWidthProperty().bind(contentArea.widthProperty());
+                ((Region) root).prefHeightProperty().bind(contentArea.heightProperty());
+            }
 
-            // Tải lại màn hình Login
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/securityview/Login.fxml")));
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Đăng nhập hệ thống");
-            loginStage.setScene(new Scene(root));
-            loginStage.setResizable(false);
-            loginStage.show();
-
+            contentArea.getChildren().setAll(root);
         } catch (IOException e) {
-            System.err.println("Lỗi khi quay lại màn hình Login: " + e.getMessage());
+            System.err.println("Không tìm thấy file: " + fxmlFile);
+            e.printStackTrace();
         }
     }
 
-    private void loadFXML(String fxmlFile) {
+    @FXML
+    private void handleLogout(ActionEvent event) {
         try {
-            Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
-            contentArea.getChildren().setAll(fxml);
+            UserSession.clear();
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/securityview/Login.fxml")));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
-            System.err.println("Không tìm thấy file FXML: " + fxmlFile);
             e.printStackTrace();
         }
     }

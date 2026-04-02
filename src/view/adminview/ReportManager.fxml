@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.adminc.ReportController" style="-fx-background-color: #f4f6f9;">
+
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    <Label text="BÁO CÁO &amp; THỐNG KÊ" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #bdc3c7;">
+
+        <Tab text="1. Tài chính &amp; Học phí">
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                <VBox spacing="20" alignment="CENTER">
+                    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                    <HBox alignment="CENTER">
+                        <VBox alignment="CENTER" style="-fx-background-color: #e8f8f5; -fx-padding: 20; -fx-background-radius: 10;">
+                            <Label text="TỔNG DOANH THU" style="-fx-text-fill: #16a085; -fx-font-weight: bold;"/>
+                            <Label fx:id="lblTongDoanhThu" text="0 đ" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #16a085;"/>
+                        </VBox>
+                    </HBox>
+                    <BarChart fx:id="chartDoanhThuKhoa" title="Doanh thu theo Khoa (VNĐ)" prefHeight="350">
+                        <xAxis><CategoryAxis label="Khoa"/></xAxis>
+                        <yAxis><NumberAxis label="Số tiền"/></yAxis>
+                    </BarChart>
+                    <Separator />
+                    <VBox spacing="10">
+                        <Label text="Danh sách Chi tiết Công nợ Sinh viên" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <TextField fx:id="txtTimKiemTC" promptText="Tìm mã hoặc tên SV..." prefWidth="250" style="-fx-background-radius: 15; -fx-padding: 5 10;"/>
+                            <ComboBox fx:id="cbLocTrangThaiTC" prefWidth="200" style="-fx-background-radius: 15;"/>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button text="📥 Xuất Excel (CSV)" onAction="#handleXuatExcelTaiChinh" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 15; -fx-cursor: hand;"/>
+                        </HBox>
+                        <TableView fx:id="tableTaiChinh" prefHeight="300">
+                            <columns>
+                                <TableColumn fx:id="colMaSV_TC" text="Mã SV" prefWidth="100"/>
+                                <TableColumn fx:id="colHoTen_TC" text="Họ Tên" prefWidth="180"/>
+                                <TableColumn fx:id="colLop_TC" text="Lớp" prefWidth="100"/>
+                                <TableColumn fx:id="colTongPhatSinh_TC" text="Tổng Phát Sinh" prefWidth="120"/>
+                                <TableColumn fx:id="colDaNop_TC" text="Đã Nộp" prefWidth="120"/>
+                                <TableColumn fx:id="colConNo_TC" text="Còn Nợ" prefWidth="120"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+        <Tab text="2. Đào tạo &amp; Điểm số">
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                <VBox spacing="20">
+                    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                    <PieChart fx:id="chartHocLuc" title="Phân bổ Học lực Sinh viên" prefHeight="350"/>
+                    <Separator />
+                    <VBox spacing="10">
+                        <Label text="Bảng điểm Chi tiết theo Sinh viên" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <TextField fx:id="txtTimKiemDT" promptText="Tìm mã, tên SV hoặc môn học..." prefWidth="250" style="-fx-background-radius: 15; -fx-padding: 5 10;"/>
+                            <ComboBox fx:id="cbLocHocLucDT" prefWidth="200" style="-fx-background-radius: 15;"/>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button text="📥 Xuất Excel (CSV)" onAction="#handleXuatExcelDaoTao" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 15; -fx-cursor: hand;"/>
+                        </HBox>
+                        <TableView fx:id="tableDaoTao" prefHeight="300">
+                            <columns>
+                                <TableColumn fx:id="colMaSV_DT" text="Mã SV" prefWidth="100"/>
+                                <TableColumn fx:id="colHoTen_DT" text="Họ Tên" prefWidth="180"/>
+                                <TableColumn fx:id="colTenMH_DT" text="Môn Học" prefWidth="200"/>
+                                <TableColumn fx:id="colMaLHP_DT" text="Lớp Học Phần" prefWidth="120"/>
+                                <TableColumn fx:id="colDiem_DT" text="Điểm Số" prefWidth="80"/>
+                                <TableColumn fx:id="colXepLoai_DT" text="Xếp Loại" prefWidth="120"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+        <Tab text="3. Hệ thống &amp; Sinh viên">
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                <VBox spacing="20" alignment="CENTER">
+                    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                    <BarChart fx:id="chartMatDoSV" title="Mật độ Sinh viên theo Khoa" prefHeight="350">
+                        <xAxis><CategoryAxis label="Khoa"/></xAxis>
+                        <yAxis><NumberAxis label="Số lượng SV"/></yAxis>
+                    </BarChart>
+                    <Separator />
+                    <VBox spacing="10">
+                        <Label text="Danh sách Hồ sơ Sinh viên toàn trường" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <TextField fx:id="txtTimKiemHT" promptText="Tìm mã, tên hoặc lớp..." prefWidth="250" style="-fx-background-radius: 15; -fx-padding: 5 10;"/>
+                            <ComboBox fx:id="cbLocKhoaHT" prefWidth="250" promptText="Lọc theo Khoa" style="-fx-background-radius: 15;"/>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button text="📥 Xuất Excel (CSV)" onAction="#handleXuatExcelHeThong" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 15; -fx-cursor: hand;"/>
+                        </HBox>
+                        <TableView fx:id="tableHeThong" prefHeight="300">
+                            <columns>
+                                <TableColumn fx:id="colMaSV_HT" text="Mã SV" prefWidth="100"/>
+                                <TableColumn fx:id="colHoTen_HT" text="Họ Tên" prefWidth="180"/>
+                                <TableColumn fx:id="colLop_HT" text="Lớp" prefWidth="100"/>
+                                <TableColumn fx:id="colKhoa_HT" text="Khoa Quản Lý" prefWidth="200"/>
+                                <TableColumn fx:id="colTrangThai_HT" text="Trạng Thái SV" prefWidth="150"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+    </TabPane>
+</VBox>

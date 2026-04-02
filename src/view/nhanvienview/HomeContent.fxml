@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="20"
+      alignment="TOP_CENTER"
+      style="-fx-padding: 30; -fx-background-color: #f4f6f9;">
+
+    <!-- TITLE -->
+    <Label text="Xin chào!"
+           style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <!-- CARD -->
+    <VBox prefWidth="600"
+          prefHeight="400"
+          spacing="10"
+          style="-fx-background-color: white;
+                 -fx-padding: 20;
+                 -fx-background-radius: 12;">
+
+        <Label text="🔔 THÔNG BÁO HỆ THỐNG"
+               style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+        <Label text="⚠️ Lớp CNTT01 chưa nhập điểm"/>
+        <Label text="⏰ Hạn nhập điểm còn 3 ngày"/>
+        <Label text="💰 5 sinh viên chưa đóng học phí"/>
+        <Label text="📢 Họp khoa thứ 6"/>
+
+    </VBox>
+
+</VBox>

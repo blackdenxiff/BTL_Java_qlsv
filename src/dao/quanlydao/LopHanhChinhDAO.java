@@ -1,10 +1,13 @@
 package dao.quanlydao;
 
 import database.KNDatabase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.quanly.LopHanhChinh;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LopHanhChinhDAO {
@@ -85,5 +88,27 @@ public class LopHanhChinhDAO {
             System.out.println("Loi khi xoa lop hanh chinh: " + e.getMessage());
             System.out.println("Luu y: Hay xoa het sinh vien thuoc lop nay truoc khi xoa lop.");
         }
+    }
+
+    public ObservableList<LopHanhChinh> getByCTDT(String maCTDT) {
+        ObservableList<LopHanhChinh> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM LopHanhChinh WHERE MaCTDT = ?";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maCTDT);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                // Giả sử Constructor: (maLop, nienKhoa, tenLop, maCTDT, maNV)
+                list.add(new LopHanhChinh(
+                        rs.getString("MaLop"),
+                        rs.getString("NienKhoa"),
+                        rs.getString("TenLop"),
+                        rs.getString("MaCTDT"),
+                        rs.getString("MaNV")
+                ));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
     }
 }

@@ -1,10 +1,13 @@
 package dao.ntochucdaotaodao;
 
 import database.KNDatabase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.ntochucdaotao.Khoa;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class KhoaDAO {
@@ -53,7 +56,8 @@ public class KhoaDAO {
     }
 
     public void deleteKhoa(String maKhoa) {
-        String sql = "DELETE FROM Khoa WHERE MaKhoa = ?";
+        // Đổi DELETE thành UPDATE isDeleted = 1
+        String sql = "UPDATE Khoa SET isDeleted = 1 WHERE MaKhoa = ?";
 
         try (Connection conn = KNDatabase.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -64,14 +68,42 @@ public class KhoaDAO {
 
             int rows = pstmt.executeUpdate();
             if (rows > 0) {
-                System.out.println("Xoa khoa " + maKhoa + " thanh cong!");
+                System.out.println("Da chuyen khoa " + maKhoa + " vao thung rac (Xoa mem)!");
             } else {
                 System.out.println("Thong bao: Khong tim thay MaKhoa de xoa.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Loi khi xoa khoa: " + e.getMessage());
-            System.out.println("Luu y: Khoa nay co the dang chua Nhan vien hoac Lop hoc. Ban phai xoa du lieu con truoc.");
+            System.out.println("Loi khi xoa mem khoa: " + e.getMessage());
         }
+    }
+
+    public ObservableList<Khoa> searchKhoa(String keyword) {
+        ObservableList<Khoa> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM Khoa WHERE MaKhoa LIKE ? OR TenKhoa LIKE ?";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + keyword + "%");
+            pstmt.setString(2, "%" + keyword + "%");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                list.add(new Khoa(rs.getString("MaKhoa"), rs.getString("TenKhoa")));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
+    }
+
+    // Lấy toàn bộ danh sách Khoa
+    public ObservableList<Khoa> getAllKhoa() {
+        ObservableList<Khoa> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM Khoa";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                list.add(new Khoa(rs.getString("MaKhoa"), rs.getString("TenKhoa")));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
     }
 }

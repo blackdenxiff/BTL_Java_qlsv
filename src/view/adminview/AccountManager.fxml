@@ -1,23 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox spacing="20" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-    <Label text="Quản lý Tài khoản &amp; Phân quyền" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+<VBox spacing="15" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.adminc.AccountManagerController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-    <HBox spacing="10">
-        <Button text="+ Tạo mới" />
-        <Button text=" Nhập từ Excel" style="-fx-background-color: #27ae60; -fx-text-fill: white;" />
-        <TextField placeholder="Tìm kiếm tài khoản..." HBox.hgrow="ALWAYS" />
+    <Label text="QUẢN LÝ TÀI KHOẢN &amp; PHÂN QUYỀN"
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="txtSearch"
+                   promptText="Tìm tên/mã..."
+                   prefWidth="220"
+                   style="-fx-background-radius: 15;"/>
+
+        <Button text="Tìm kiếm"
+                onAction="#handleSearch"
+                style="-fx-background-radius: 15; -fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand;" />
+
+        <Region HBox.hgrow="ALWAYS" />
+
+        <MenuButton text="Tác vụ quản trị" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;">
+            <items>
+                <MenuItem text="Tạo tất cả tài khoản mới" onAction="#handleCreateAllAccounts" />
+                <MenuItem text="Tạo tài khoản đơn lẻ" onAction="#handleCreateSingleAccountManual" />
+
+                <SeparatorMenuItem />
+
+                <MenuItem text="Reset tất cả mật khẩu (về Ngày sinh)" onAction="#handleResetAllPasswords" />
+                <MenuItem text="Reset mật khẩu dòng đang chọn" onAction="#handleResetSelectedPassword" />
+
+                <SeparatorMenuItem />
+
+                <MenuItem text="Thay đổi quyền (Role)" onAction="#handleQuickUpdateRole" />
+
+                <SeparatorMenuItem />
+
+                <MenuItem text="Xóa tài khoản đang chọn" onAction="#handleDeleteSelectedAccount" style="-fx-text-fill: #e74c3c; -fx-font-weight: bold;" />
+                <MenuItem text="Lịch sử xóa (Thùng rác)" onAction="#handleShowDeleteHistory" />
+            </items>
+        </MenuButton>
     </HBox>
 
-    <TableView VBox.vgrow="ALWAYS">
+    <TableView fx:id="tableUsers" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;">
         <columns>
-            <TableColumn text="Mã số" prefWidth="100" />
-            <TableColumn text="Họ tên" prefWidth="200" />
-            <TableColumn text="Vai trò" prefWidth="120" />
-            <TableColumn text="Trạng thái" prefWidth="100" />
-            <TableColumn text="Thao tác" prefWidth="150" />
+            <TableColumn fx:id="colUsername" text="Tài khoản (Username)" prefWidth="160"/>
+            <TableColumn fx:id="colFullName" text="Họ và Tên" prefWidth="200"/>
+            <TableColumn fx:id="colType" text="Quyền hạn" prefWidth="120"/>
+            <TableColumn fx:id="colMaSV" text="Mã Sinh Viên" prefWidth="140"/>
+            <TableColumn fx:id="colMaNV" text="Mã Nhân Viên" prefWidth="140"/>
         </columns>
+        <placeholder>
+            <Label text="Không có tài khoản nào hiển thị"/>
+        </placeholder>
     </TableView>
 </VBox>

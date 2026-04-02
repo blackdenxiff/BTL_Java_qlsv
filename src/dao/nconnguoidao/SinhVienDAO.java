@@ -115,7 +115,51 @@ public class SinhVienDAO {
             System.err.println("Lỗi khi cập nhật dữ liệu: " + e.getMessage());
         }
     }
+    public List<SinhVien> getSinhVienByTenKhoa(String tenKhoa) {
+        List<SinhVien> list = new ArrayList<>();
 
+        String sql =
+                "SELECT sv.* FROM SinhVien sv " +
+                        "JOIN LopHanhChinh lhc ON sv.MaLop = lhc.MaLop " +
+                        "JOIN ChuongTrinhDaoTao ctdt ON lhc.MaCTDT = ctdt.MaCTDT " +
+                        "JOIN Khoa k ON ctdt.MaKhoa = k.MaKhoa " +   // ✅ đúng bảng
+                        "WHERE k.TenKhoa LIKE ?";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + tenKhoa + "%"); // tìm gần đúng
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                SinhVien sv = new SinhVien();
+
+                sv.setMaSV(rs.getString("MaSV"));
+                sv.setHoDem(rs.getString("HoDem"));
+                sv.setTen(rs.getString("Ten"));
+
+                if (rs.getDate("NgaySinh") != null) {
+                    sv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                }
+
+                sv.setGioiTinh(rs.getString("GioiTinh"));
+                sv.setNamNhapHoc(rs.getInt("NamNhapHoc"));
+                sv.setMaLop(rs.getString("MaLop"));
+                sv.setSdt(rs.getString("SDT"));
+                sv.setEmail(rs.getString("Email"));
+                sv.setTrangThaiSV(rs.getString("TrangThaiSV"));
+                sv.setMaHuyen(rs.getString("MaHuyen"));
+
+                list.add(sv);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     // Lay toan bo danh sach sinh vien
     public List<SinhVien> getAllSinhVien() {
         List<SinhVien> list = new ArrayList<>();
@@ -178,5 +222,54 @@ public class SinhVienDAO {
             System.out.println("Loi khi tim sinh vien theo ma: " + e.getMessage());
         }
         return null;
+    }
+    // --- BỔ SUNG: TÌM KIẾM NÂNG CAO ---
+    public List<SinhVien> searchSinhVienTheoKhoaHocVaKhoa(String namNhapHoc, String maKhoa) {
+        List<SinhVien> list = new ArrayList<>();
+        // Câu lệnh SQL JOIN các bảng để tìm ra sinh viên thuộc khoa nào
+        StringBuilder sql = new StringBuilder(
+                "SELECT sv.* FROM SinhVien sv " +
+                        "LEFT JOIN LopHanhChinh lhc ON sv.MaLop = lhc.MaLop " +
+                        "LEFT JOIN ChuongTrinhDaoTao ctdt ON lhc.MaCTDT = ctdt.MaCTDT WHERE 1=1 "
+        );
+
+        if (namNhapHoc != null && !namNhapHoc.isEmpty()) {
+            sql.append(" AND sv.NamNhapHoc = ? ");
+        }
+        if (maKhoa != null && !maKhoa.isEmpty()) {
+            sql.append(" AND ctdt.MaKhoa = ? ");
+        }
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+
+            int paramIndex = 1;
+            if (namNhapHoc != null && !namNhapHoc.isEmpty()) {
+                pstmt.setInt(paramIndex++, Integer.parseInt(namNhapHoc));
+            }
+            if (maKhoa != null && !maKhoa.isEmpty()) {
+                pstmt.setString(paramIndex++, maKhoa);
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                SinhVien sv = new SinhVien();
+                sv.setMaSV(rs.getString("MaSV"));
+                sv.setHoDem(rs.getString("HoDem"));
+                sv.setTen(rs.getString("Ten"));
+                if (rs.getDate("NgaySinh") != null) sv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                sv.setGioiTinh(rs.getString("GioiTinh"));
+                sv.setNamNhapHoc(rs.getInt("NamNhapHoc"));
+                sv.setMaLop(rs.getString("MaLop"));
+                sv.setSdt(rs.getString("SDT"));
+                sv.setEmail(rs.getString("Email"));
+                sv.setTrangThaiSV(rs.getString("TrangThaiSV"));
+                sv.setMaHuyen(rs.getString("MaHuyen"));
+                list.add(sv);
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi tìm kiếm nâng cao: " + e.getMessage());
+        }
+        return list;
     }
 }

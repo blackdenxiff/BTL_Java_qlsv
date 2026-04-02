@@ -2,7 +2,7 @@ package dao.quanlydao;
 
 import database.KNDatabase;
 import model.quanly.LopHocPhan;
-
+import java.sql.ResultSet;// thêm thư viện
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -93,5 +93,40 @@ public class LopHocPhanDAO {
             System.out.println("Loi khi xoa lop hoc phan: " + e.getMessage());
             System.out.println("Luu y: Kiem tra xem co sinh vien nao da dang ky lop nay hay chua.");
         }
+    }
+    // --- BỔ SUNG: KIỂM TRA TRÙNG PHÒNG HỌC ---
+    public boolean checkTrungPhong(String caHoc, String phongHoc, int hocKy, int namHoc) {
+        String sql = "SELECT * FROM LopHocPhan WHERE CaHoc = ? AND PhongHoc = ? AND HocKy = ? AND NamHoc = ?";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, caHoc);
+            pstmt.setString(2, phongHoc);
+            pstmt.setInt(3, hocKy);
+            pstmt.setInt(4, namHoc);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // Trả về true nếu đã có lớp học
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi kiểm tra trùng phòng: " + e.getMessage());
+        }
+        return false;
+    }
+
+    // --- BỔ SUNG: KIỂM TRA GIẢNG VIÊN BẬN ---
+    public boolean checkGiangVienBan(String maNV, String caHoc, int hocKy, int namHoc) {
+        String sql = "SELECT * FROM LopHocPhan WHERE MaNV = ? AND CaHoc = ? AND HocKy = ? AND NamHoc = ?";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, maNV);
+            pstmt.setString(2, caHoc);
+            pstmt.setInt(3, hocKy);
+            pstmt.setInt(4, namHoc);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // Trả về true nếu giảng viên đã có lịch dạy ca này
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi kiểm tra lịch giảng viên: " + e.getMessage());
+        }
+        return false;
     }
 }

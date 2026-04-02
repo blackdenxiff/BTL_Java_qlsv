@@ -35,17 +35,24 @@ public class LoginController {
             return;
         }
 
-        // 1. Kiểm tra đăng nhập qua DAO
+        // 1. Kiểm tra xem tài khoản có bị khóa không trước tiên
+        if (nguoiDungDao.isAccountLocked(user)) {
+            showError("Tài khoản của bạn đã bị khóa!");
+            shakeNode(usernameField);
+            return; // Dừng luôn, không cho đăng nhập
+        }
+
+        // 2. Nếu không bị khóa, tiến hành kiểm tra mật khẩu
         boolean isSuccess = nguoiDungDao.checkLogin(user, pass);
 
         if (isSuccess) {
-            // 2. Lấy loại người dùng để biết đi đâu (AD, NV, SV)
+            // Lấy loại người dùng để biết đi đâu (AD, NV, SV)
             String userType = nguoiDungDao.getUserType(user);
             model.nhethong.UserSession.saveSession(user, userType);
             messageLabel.setText("Đăng nhập thành công!");
             messageLabel.setStyle("-fx-text-fill: #2ecc71;");
 
-            // 3. Thực hiện chuyển màn hình
+            // Thực hiện chuyển màn hình
             navigateToDashboard(event, userType);
         } else {
             showError("Tài khoản hoặc mật khẩu không chính xác!");
@@ -67,7 +74,7 @@ public class LoginController {
                 title = "Hệ thống Quản lý - Admin";
                 break;
             case "NV": //chưa làm
-                fxmlPath = "/view/nhanvienview/NhanVienDashboard.fxml";
+                fxmlPath = "/view/nhanvienview/HomeNV.fxml";
                 title = "Hệ thống Quản lý - Nhân viên";
                 break;
             case "SV": // chưa lamf

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.nhanvien.HocPhiController"
+      spacing="20"
+      style="-fx-padding: 20; -fx-background-color: #f4f6f9;">
+
+    <!-- TITLE -->
+    <Label text="TÍNH HỌC PHÍ"
+           style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <!-- FORM TÍNH HỌC PHÍ -->
+    <VBox spacing="15"
+          style="-fx-background-color: white;
+                 -fx-padding: 20;
+                 -fx-background-radius: 12;
+                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10,0,0,3);">
+
+        <GridPane hgap="15" vgap="10">
+
+            <Label text="Mã sinh viên:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtMaSV" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+
+            <Label text="Đơn giá / tín chỉ:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtDonGia" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
+
+        </GridPane>
+
+        <HBox spacing="10">
+            <Button text="💰 Tính học phí" onAction="#handleTinhHocPhi"
+                    style="-fx-background-color: #1e3c72; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+        </HBox>
+
+    </VBox>
+
+</VBox>

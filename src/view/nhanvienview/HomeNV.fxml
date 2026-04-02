@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.nhanvien.HomeNVController"
+            stylesheets="@style.css">
+
+    <!-- ================= HEADER ================= -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="15"
+              style="-fx-background-color: #1e3c72; -fx-padding: 12 25;">
+
+            <ImageView fitHeight="45" preserveRatio="true">
+                <image>
+                    <Image url="@/view/imge/logo_login.png"/>
+                </image>
+            </ImageView>
+
+            <Label text="HỆ THỐNG QUẢN LÝ SINH VIÊN"
+                   style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label text="👤 Nhân viên"
+                   style="-fx-text-fill: white;"/>
+
+            <Button text="Đăng xuất"
+                    onAction="#handleLogout"
+                    styleClass="logout-button"/>
+        </HBox>
+    </top>
+
+    <!-- ================= SIDEBAR ================= -->
+    <left>
+        <VBox prefWidth="250"
+              spacing="12"
+              style="-fx-background-color: linear-gradient(to bottom,#1e3c72,#2a5298); -fx-padding: 15;">
+
+            <Label text="HỆ THỐNG QLSV"
+                   style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+
+            <Accordion fx:id="menuAccordion">
+
+                <panes>
+                    <!-- Home -->
+                    <TitledPane text="Trang chủ" expanded="false">
+                        <content>
+                            <VBox spacing="5" style="-fx-padding: 5;">
+                                <Button text="Dashboard" onAction="#handleHome"
+                                        style="-fx-background-color: #ffffff; -fx-text-fill: #1e3c72; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                            </VBox>
+                        </content>
+                    </TitledPane>
+
+                    <!-- Quản lý -->
+                    <TitledPane text="Quản lý" expanded="false">
+                        <content>
+                            <VBox spacing="5" style="-fx-padding: 5;">
+                                <Button text="Sinh viên" onAction="#handleSinhVien"
+                                        style="-fx-background-color: #ffffff; -fx-text-fill: #1e3c72; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                                <Button text="Giảng viên" onAction="#handleNhanVien"
+                                        style="-fx-background-color: #ffffff; -fx-text-fill: #1e3c72; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                            </VBox>
+                        </content>
+                    </TitledPane>
+
+                    <!-- Giảng dạy -->
+                    <TitledPane text="Giảng dạy" expanded="false">
+                        <content>
+                            <VBox spacing="5" style="-fx-padding: 5;">
+                                <Button text="Lớp học phần" onAction="#handleLopHocPhan"
+                                        style="-fx-background-color: #ffffff; -fx-text-fill: #1e3c72; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                            </VBox>
+                        </content>
+                    </TitledPane>
+
+                    <!-- Điểm -->
+                    <TitledPane text="Điểm" expanded="false">
+                        <content>
+                            <VBox spacing="5" style="-fx-padding: 5;">
+                                <Button text="Nhập điểm" onAction="#handleNhapDiem"
+                                        style="-fx-background-color: #ffffff; -fx-text-fill: #1e3c72; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                            </VBox>
+                        </content>
+                    </TitledPane>
+
+                    <!-- Tài chính -->
+                    <TitledPane text="Tài chính" expanded="false">
+                        <content>
+                            <VBox spacing="5" style="-fx-padding: 5;">
+                                <Button text="Học phí" onAction="#handleHocPhi"
+                                        style="-fx-background-color: #ffffff; -fx-text-fill: #1e3c72; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                            </VBox>
+                        </content>
+                    </TitledPane>
+                </panes>
+
+            </Accordion>
+        </VBox>
+    </left>
+
+    <!-- ================= CONTENT ================= -->
+    <center>
+        <VBox fx:id="contentArea"
+              alignment="TOP_CENTER"
+              spacing="20"
+              style="-fx-padding: 30;
+                     -fx-background-color: linear-gradient(to bottom,#1e3c72,#2a5298);"/>
+    </center>
+
+</BorderPane>
