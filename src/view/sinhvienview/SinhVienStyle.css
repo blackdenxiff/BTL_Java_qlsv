@@ -1,0 +1,126 @@
+/* Màu sắc chủ đạo và Font chữ */
+.root {
+    -fx-font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar {
+    -fx-background-color: #293e73;
+}
+
+.logo-text {
+    -fx-fill: #fdb913;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.logo-sub {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+.menu-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-padding: 12 10 12 25;
+    -fx-cursor: hand;
+    -fx-pref-width: 250px;
+}
+
+.menu-btn:hover {
+    -fx-background-color: #3b508a;
+    -fx-border-color: transparent transparent transparent #fdb913;
+    -fx-border-width: 0 0 0 4;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ff6b6b;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 10 0 20 0;
+}
+.logout-btn:hover {
+    -fx-text-fill: #ff4757;
+}
+
+/* HEADER */
+.header {
+    -fx-background-color: #3b508a;
+}
+
+.search-field {
+    -fx-background-color: #293e73;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #a0aabf;
+    -fx-background-radius: 20;
+    -fx-padding: 8 15 8 15;
+}
+
+.user-name {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.avatar-circle {
+    -fx-fill: #d1d8e0;
+}
+
+/* MAIN CONTENT AREA */
+.main-wrapper {
+    -fx-background-color: #3b508a; /* Để tạo viền màu cho phần bo góc */
+}
+
+.content-bg {
+    -fx-background-color: #e8ecf1;
+    -fx-background-radius: 25 0 0 0; /* Bo góc trái trên giống hình */
+    -fx-padding: 30;
+}
+
+/* DASHBOARD CARDS */
+.greeting-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #293e73;
+}
+
+.section-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 3);
+    -fx-padding: 15;
+}
+
+.section-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+    -fx-border-color: transparent transparent transparent #fdb913;
+    -fx-border-width: 0 0 0 4;
+    -fx-padding: 0 0 0 10;
+}
+
+.see-all {
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+/* STICKY NOTES */
+.sticky-note {
+    -fx-background-color: #ffeaa7;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 5, 0, 2, 2);
+    -fx-min-width: 150px;
+    -fx-min-height: 120px;
+}
+.sticky-title {
+    -fx-font-family: "Comic Sans MS", cursive;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

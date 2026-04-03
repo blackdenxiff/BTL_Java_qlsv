@@ -5,11 +5,15 @@ import dao.quanlydao.LopHocPhanDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import model.nconnguoi.SinhVien;
 import model.quanly.LopHocPhan;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class LopHocPhanController {
@@ -17,7 +21,7 @@ public class LopHocPhanController {
     private LopHocPhanDAO lhpDAO = new LopHocPhanDAO();
     private DangKiDAO dangKiDAO = new DangKiDAO();
 
-    // ===== FORM =====
+    // ===== CÁC TRƯỜNG NHẬP LIỆU (FX:ID) =====
     @FXML private TextField txtMaLHP;
     @FXML private TextField txtMaGV;
     @FXML private TextField txtCaHoc;
@@ -25,15 +29,15 @@ public class LopHocPhanController {
     @FXML private TextField txtHocKy;
     @FXML private TextField txtNamHoc;
 
-    @FXML private TextField txtMaLHPExport;
-    @FXML private TextField txtFile;
+    @FXML private TextField txtMaLHPExport; // Ô nhập mã LHP để xuất file
+    @FXML private TextField txtFile;         // Ô nhập tên file (không còn bắt buộc vì có FileChooser)
 
-    // ================= PHÂN CÔNG =================
+    // ================= CHỨC NĂNG PHÂN CÔNG GIẢNG DẠY =================
     @FXML
     private void handlePhanCong() {
         try {
             if (txtMaLHP.getText().isEmpty() || txtMaGV.getText().isEmpty()) {
-                show("Lỗi", "Nhập thiếu dữ liệu!");
+                show("Lỗi", "Vui lòng nhập đầy đủ Mã LHP và Mã GV!");
                 return;
             }
 
@@ -45,110 +49,89 @@ public class LopHocPhanController {
             lhp.setHocKy(Integer.parseInt(txtHocKy.getText().trim()));
             lhp.setNamHoc(Integer.parseInt(txtNamHoc.getText().trim()));
 
-            // gọi luôn trong class (KHÔNG tạo controller mới)
-            boolean ok = phanCongGiangDay(lhp);
-
-            if (ok) {
-                show("OK", "Phân công thành công!");
+            if (phanCongGiangDay(lhp)) {
+                show("Thành công", "Phân công giảng dạy thành công!");
                 clearForm();
             } else {
-                show("Lỗi", "Trùng phòng hoặc giảng viên!");
+                show("Lỗi", "Trùng lịch phòng học hoặc giảng viên đã bận ca này!");
             }
-
         } catch (Exception e) {
-            show("Lỗi", "Sai dữ liệu!");
+            show("Lỗi", "Dữ liệu nhập vào không hợp lệ (Học kỳ/Năm học phải là số)!");
         }
     }
 
-    // ================= XUẤT FILE =================
+    // ================= CHỨC NĂNG XUẤT FILE EXCEL (FIX LỖI CỦA BẠN) =================
     @FXML
     private void handleXuat() {
         try {
             String maLHP = txtMaLHPExport.getText().trim();
-            String file = txtFile.getText().trim();
 
             if (maLHP.isEmpty()) {
-                show("Lỗi", "Nhập mã LHP!");
+                show("Lỗi", "Vui lòng nhập Mã lớp học phần cần xuất!");
                 return;
             }
 
-            if (file.isEmpty()) file = "diemdanh.txt";
+            // 1. Mở cửa sổ chọn vị trí lưu file
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Lưu danh sách điểm danh");
+            fileChooser.setInitialFileName("DiemDanh_" + maLHP + ".csv");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel CSV (*.csv)", "*.csv"));
 
-            xuatDanhSachDiemDanh(maLHP, file);
+            File savedFile = fileChooser.showSaveDialog(txtMaLHPExport.getScene().getWindow());
 
-            show("OK", "Xuất file thành công!");
+            // 2. Tiến hành xuất nếu người dùng chọn file
+            if (savedFile != null) {
+                xuatDanhSachDiemDanh(maLHP, savedFile.getAbsolutePath());
+                show("Thành công", "Đã xuất dữ liệu ra file:\n" + savedFile.getName());
+            }
 
         } catch (Exception e) {
-            show("Lỗi", "Xuất file thất bại!");
+            e.printStackTrace();
+            show("Lỗi", "Lỗi hệ thống khi xuất file!");
         }
     }
 
-    // ================= LOGIC =================
+    // ================= LOGIC XỬ LÝ DỮ LIỆU =================
     private boolean phanCongGiangDay(LopHocPhan lhp) {
-
-        if (lhpDAO.checkTrungPhong(
-                lhp.getCaHoc(),
-                lhp.getPhongHoc(),
-                lhp.getHocKy(),
-                lhp.getNamHoc())) {
-
-            return false;
-        }
-
-        if (lhpDAO.checkGiangVienBan(
-                lhp.getMaNV(),
-                lhp.getCaHoc(),
-                lhp.getHocKy(),
-                lhp.getNamHoc())) {
-
-            return false;
-        }
+        if (lhpDAO.checkTrungPhong(lhp.getCaHoc(), lhp.getPhongHoc(), lhp.getHocKy(), lhp.getNamHoc())) return false;
+        if (lhpDAO.checkGiangVienBan(lhp.getMaNV(), lhp.getCaHoc(), lhp.getHocKy(), lhp.getNamHoc())) return false;
 
         lhpDAO.insertLHP(lhp);
         return true;
     }
 
-    private void xuatDanhSachDiemDanh(String maLHP, String file) {
-
+    private void xuatDanhSachDiemDanh(String maLHP, String filePath) {
         List<SinhVien> list = dangKiDAO.getSinhVienByLHP(maLHP);
-
         if (list.isEmpty()) {
-            show("Cảnh báo", "Không có sinh viên!");
+            show("Cảnh báo", "Lớp này chưa có sinh viên đăng ký!");
             return;
         }
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-
-            bw.write("===== DANH SÁCH LỚP " + maLHP + " =====");
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.UTF_8))) {
+            bw.write('\ufeff'); // Ghi mã BOM để Excel đọc được Tiếng Việt
+            bw.write("STT;Mã Sinh Viên;Họ Đệm;Tên;Lớp Hành Chính;Ký tên");
             bw.newLine();
 
             int i = 1;
             for (SinhVien sv : list) {
-                bw.write(i++ + ". " + sv.getMaSV() + " - "
-                        + sv.getHoDem() + " " + sv.getTen());
+                bw.write(String.format("%d;%s;%s;%s;%s;", i++, sv.getMaSV(), sv.getHoDem(), sv.getTen(), sv.getMaLop()));
                 bw.newLine();
             }
-
         } catch (Exception e) {
-            show("Lỗi", "Không ghi được file!");
+            e.printStackTrace();
         }
     }
 
-    // ================= HỖ TRỢ =================
     private void clearForm() {
-        txtMaLHP.clear();
-        txtMaGV.clear();
-        txtCaHoc.clear();
-        txtPhong.clear();
-        txtHocKy.clear();
-        txtNamHoc.clear();
+        txtMaLHP.clear(); txtMaGV.clear(); txtCaHoc.clear();
+        txtPhong.clear(); txtHocKy.clear(); txtNamHoc.clear();
     }
 
-    private void show(String t, String c) {
+    private void show(String title, String content) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle(t);
+        a.setTitle(title);
         a.setHeaderText(null);
-        a.setContentText(c);
+        a.setContentText(content);
         a.showAndWait();
     }
 }

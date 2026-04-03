@@ -7,12 +7,14 @@
 
     <left>
         <VBox spacing="10" styleClass="sidebar" prefWidth="250">
-            <Label text="ADMIN PANEL" styleClass="sidebar-title" />
+            <Label text="ADMIN PANEL" styleClass="sidebar-title" onMouseClicked="#handleShowProfile" style="-fx-cursor: hand;"/>
 
             <Button fx:id="btnAccounts" text="1. Tài khoản &amp; Phân quyền" onAction="#switchPage" maxWidth="Infinity" />
             <Button fx:id="btnSystem" text="2. Quản lý Hệ thống &amp; Đào tạo" onAction="#switchPage" maxWidth="Infinity" />
             <Button fx:id="btnFinance" text="3. Tài chính &amp; Học phí" onAction="#switchPage" maxWidth="Infinity" />
             <Button fx:id="btnStats" text="4. Thống kê &amp; Báo cáo" onAction="#switchPage" maxWidth="Infinity" />
+            <Button fx:id="btnManageSV" text="5. Quản lý Sinh viên" onAction="#switchPage" styleClass="menu-btn"/>
+            <Button fx:id="btnManageNV" text="6. Quản lý Nhân viên" onAction="#switchPage" styleClass="menu-btn"/>
 
             <Region VBox.vgrow="ALWAYS" />
             <Button fx:id="btnChangePassword" text="Đổi mật khẩu" styleClass="btn-change-password" maxWidth="Infinity" onAction="#switchPage" />

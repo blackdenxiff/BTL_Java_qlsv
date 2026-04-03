@@ -129,4 +129,66 @@ public class LopHocPhanDAO {
         }
         return false;
     }
+
+    // --- BỔ SUNG: LẤY THỜI KHÓA BIỂU CỦA 1 SINH VIÊN ---
+    public java.util.List<java.util.Map<String, Object>> getThoiKhoaBieuSinhVien(String maSV, int hocKy, int namHoc) {
+        java.util.List<java.util.Map<String, Object>> list = new java.util.ArrayList<>();
+        // JOIN 3 bảng để lấy lịch học
+        String sql = "SELECT lhp.MaLHP, mh.TenMH, lhp.CaHoc, lhp.PhongHoc, lhp.MaNV " +
+                "FROM DangKy dk " +
+                "INNER JOIN LopHocPhan lhp ON dk.MaLHP = lhp.MaLHP " +
+                "INNER JOIN MonHoc mh ON lhp.MaMH = mh.MaMH " +
+                "WHERE dk.MaSV = ? AND lhp.HocKy = ? AND lhp.NamHoc = ? " +
+                "AND (dk.DiemSo = 0 OR dk.DiemSo IS NULL)"; // <-- THÊM DÒNG NÀY
+
+        try (java.sql.Connection conn = database.KNDatabase.getConnection();
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, maSV);
+            pstmt.setInt(2, hocKy);
+            pstmt.setInt(3, namHoc);
+            try (java.sql.ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    java.util.Map<String, Object> row = new java.util.HashMap<>();
+                    row.put("maLHP", rs.getString("MaLHP"));
+                    row.put("tenMH", rs.getString("TenMH"));
+                    row.put("caHoc", rs.getString("CaHoc"));
+                    row.put("phongHoc", rs.getString("PhongHoc"));
+                    row.put("giangVien", rs.getString("MaNV"));
+                    list.add(row);
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            System.out.println("Lỗi lấy thời khóa biểu: " + e.getMessage());
+        }
+        return list;
+    }
+
+    // --- BỔ SUNG: XEM CÁC LỚP ĐANG MỞ TRONG KỲ ---
+    public java.util.List<java.util.Map<String, Object>> getDanhSachLopMo(int hocKy, int namHoc) {
+        java.util.List<java.util.Map<String, Object>> list = new java.util.ArrayList<>();
+        String sql = "SELECT lhp.MaLHP, mh.TenMH, mh.SoTC, lhp.CaHoc, lhp.PhongHoc " +
+                "FROM LopHocPhan lhp " +
+                "INNER JOIN MonHoc mh ON lhp.MaMH = mh.MaMH " +
+                "WHERE lhp.HocKy = ? AND lhp.NamHoc = ?";
+
+        try (java.sql.Connection conn = database.KNDatabase.getConnection();
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, hocKy);
+            pstmt.setInt(2, namHoc);
+            try (java.sql.ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    java.util.Map<String, Object> row = new java.util.HashMap<>();
+                    row.put("maLHP", rs.getString("MaLHP"));
+                    row.put("tenMH", rs.getString("TenMH"));
+                    row.put("soTinChi", rs.getInt("SoTinChi"));
+                    row.put("caHoc", rs.getString("CaHoc"));
+                    row.put("phongHoc", rs.getString("PhongHoc"));
+                    list.add(row);
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            System.out.println("Lỗi lấy danh sách lớp mở: " + e.getMessage());
+        }
+        return list;
+    }
 }

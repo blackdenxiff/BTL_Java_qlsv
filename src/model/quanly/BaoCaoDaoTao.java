@@ -20,7 +20,7 @@ public class BaoCaoDaoTao {
             if (diemSo >= 8.0) loai = "Giỏi";
             else if (diemSo >= 6.5) loai = "Khá";
             else if (diemSo >= 5.0) loai = "Trung bình";
-            else if (diemSo >= 4) loai = "yếu"
+            else if (diemSo >= 4) loai = "yếu";
 
             else loai = "Trượt";
         }

@@ -102,7 +102,30 @@ public class AccountManagerController {
         dialog.setTitle("Lịch sử xóa - Thùng rác");
         dialog.setHeaderText("Danh sách tài khoản có thể khôi phục");
 
-        TableView<NguoiDung> tableDeleted = new TableView<>(deletedList);
+        // --- 1. THÊM THANH TÌM KIẾM ---
+        TextField txtSearchTrash = new TextField();
+        txtSearchTrash.setPromptText("Nhập tên tài khoản để tìm kiếm...");
+        txtSearchTrash.setStyle("-fx-background-radius: 15; -fx-padding: 5 10;");
+
+        // Khởi tạo TableView
+        TableView<NguoiDung> tableDeleted = new TableView<>();
+
+        // --- 2. BỌC DANH SÁCH VÀO FILTERED LIST ĐỂ TÌM KIẾM TRỰC TIẾP ---
+        FilteredList<NguoiDung> filteredTrash = new FilteredList<>(deletedList, p -> true);
+        tableDeleted.setItems(filteredTrash);
+
+        // Lắng nghe sự kiện gõ phím để lọc
+        txtSearchTrash.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredTrash.setPredicate(user -> {
+                if (newValue == null || newValue.isEmpty()) return true;
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Tìm kiếm theo username (hoặc có thể thêm các trường khác nếu muốn)
+                return user.getUsername() != null && user.getUsername().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        // 3. THIẾT LẬP CỘT CHO BẢNG
         TableColumn<NguoiDung, String> colUser = new TableColumn<>("Tên tài khoản");
         colUser.setCellValueFactory(new PropertyValueFactory<>("username"));
         colUser.setPrefWidth(200);
@@ -113,10 +136,18 @@ public class AccountManagerController {
             {
                 btnRestore.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-cursor: hand;");
                 btnRestore.setOnAction(e -> {
+                    // Lấy đối tượng từ danh sách đã lọc thay vì getItems() gốc
                     NguoiDung nd = getTableView().getItems().get(getIndex());
                     if (dao.restoreNguoiDung(nd.getUsername())) {
-                        tableDeleted.getItems().remove(nd);
+                        deletedList.remove(nd); // Xóa khỏi danh sách gốc, bảng sẽ tự cập nhật
                         loadData(); // Cập nhật lại bảng chính ở phía sau
+
+                        // Đóng form nếu thùng rác trống sau khi khôi phục
+                        if (deletedList.isEmpty()) {
+                            dialog.setResult(null);
+                            dialog.close();
+                            showAlert("Thông báo", "Thùng rác đã trống.");
+                        }
                     }
                 });
             }
@@ -130,7 +161,9 @@ public class AccountManagerController {
         tableDeleted.getColumns().addAll(colUser, colRes);
         tableDeleted.setPrefHeight(300);
 
-        VBox content = new VBox(tableDeleted);
+        // --- 4. GỘP THANH TÌM KIẾM VÀ BẢNG VÀO VBOX ---
+        VBox content = new VBox(10, txtSearchTrash, tableDeleted); // Khoảng cách 10px
+
         dialog.getDialogPane().setContent(content);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         dialog.showAndWait();

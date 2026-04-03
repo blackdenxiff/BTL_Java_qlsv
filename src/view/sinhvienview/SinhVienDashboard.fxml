@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane prefHeight="720.0" prefWidth="1200.0" styleClass="main-background" stylesheets="@SinhVienStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.sinhvien.SinhVienController">
+
+    <left>
+        <VBox prefWidth="260" styleClass="sidebar">
+            <children>
+                <VBox alignment="CENTER" spacing="10">
+                    <padding><Insets top="30" bottom="20"/></padding>
+                    <Text text="TRƯỜNG ĐẠI HỌC&#10;GIAO THÔNG VẬN TẢI" styleClass="logo-text" textAlignment="CENTER"/>
+                </VBox>
+
+                <VBox spacing="5" VBox.vgrow="ALWAYS">
+                    <Button text="Trang chủ" styleClass="menu-btn" onAction="#showDashboardView"/>
+                    <Button text="Thanh toán học phí,&#10;lệ phí" styleClass="menu-btn" onAction="#handleShowTaiChinh"/>
+                    <Button text="Tin tức" styleClass="menu-btn" onAction="#handleShowTinTuc"/>
+                    <Button text="Góc học tập" styleClass="menu-btn" onAction="#handleShowDiem"/>
+                    <Button text="Đăng ký trực tuyến" styleClass="menu-btn" onAction="#handleShowLopMo"/>
+                    <Button text="Tra cứu lịch" styleClass="menu-btn" onAction="#handleShowTKB"/>
+                </VBox>
+
+                <VBox alignment="CENTER">
+                    <HBox alignment="CENTER" spacing="15">
+                        <padding><Insets bottom="20"/></padding>
+                        <Button text="Đổi mật khẩu" style="-fx-background-color: transparent; -fx-text-fill: #fdb913; -fx-cursor: hand;" onAction="#handleChangePassword"/>
+                        <Button text="Đăng xuất" styleClass="logout-btn" style="-fx-padding: 5 0 5 0;" onAction="#handleLogout"/>
+                    </HBox>
+                </VBox>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox styleClass="main-wrapper">
+
+            <HBox styleClass="header" alignment="CENTER_RIGHT" spacing="20" prefHeight="60">
+                <padding>
+                    <Insets left="20" right="30"/>
+                </padding>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <HBox alignment="CENTER" spacing="10" onMouseClicked="#handleShowProfile" style="-fx-cursor: hand;">
+                    <Circle radius="15" styleClass="avatar-circle"/>
+                    <Label fx:id="lblHoTen" text="TÊN ĐĂNG NHẬP" styleClass="user-name"/>
+                </HBox>
+            </HBox>
+
+            <StackPane VBox.vgrow="ALWAYS" styleClass="content-bg">
+
+                <VBox fx:id="viewDashboard" spacing="20">
+                    <Label text="Xin chào!" styleClass="greeting-text"/>
+                    <HBox spacing="20" VBox.vgrow="ALWAYS">
+                        <VBox styleClass="section-card" HBox.hgrow="ALWAYS" prefWidth="400">
+                            <Label text="Tiến độ học tập" styleClass="section-title"/>
+                            <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                                <Label fx:id="lblTienDo" text="0 / 120 Tín chỉ" style="-fx-font-size: 24px; -fx-text-fill: #293e73;"/>
+                            </HBox>
+                        </VBox>
+
+                        <VBox spacing="20" HBox.hgrow="ALWAYS" prefWidth="600">
+                            <VBox styleClass="section-card" spacing="15">
+                                <BorderPane>
+                                    <left><Label text="Tin tức" styleClass="section-title" BorderPane.alignment="CENTER"/></left>
+                                    <right><Label text="Xem tất cả" styleClass="see-all" BorderPane.alignment="CENTER"/></right>
+                                </BorderPane>
+                                <HBox spacing="15">
+                                    <VBox styleClass="sticky-note" alignment="CENTER">
+                                        <Label text="THÔNG BÁO" styleClass="sticky-title"/>
+                                        <Label text="TB tổ chức rút bớt&#10;học phần HK II 25-26" wrapText="true" textAlignment="CENTER"/>
+                                    </VBox>
+                                    <VBox styleClass="sticky-note" alignment="CENTER">
+                                        <Label text="THÔNG BÁO" styleClass="sticky-title"/>
+                                        <Label text="TB thi ngoại ngữ tự do&#10;dành cho SV chính quy" wrapText="true" textAlignment="CENTER"/>
+                                    </VBox>
+                                    <VBox styleClass="sticky-note" alignment="CENTER">
+                                        <Label text="THÔNG BÁO" styleClass="sticky-title"/>
+                                        <Label text="Lịch lên lớp Thực tập&#10;xưởng (N08)..." wrapText="true" textAlignment="CENTER"/>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+
+                            <HBox spacing="20">
+                                <VBox styleClass="section-card" HBox.hgrow="ALWAYS">
+                                    <BorderPane>
+                                        <left><Label text="Bạn bè" styleClass="section-title" BorderPane.alignment="CENTER"/></left>
+                                        <right><Label text="Xem tất cả" styleClass="see-all" BorderPane.alignment="CENTER"/></right>
+                                    </BorderPane>
+                                    <Region prefHeight="50"/>
+                                </VBox>
+                                <VBox styleClass="section-card" HBox.hgrow="ALWAYS">
+                                    <BorderPane>
+                                        <left><Label text="Dịch vụ" styleClass="section-title" BorderPane.alignment="CENTER"/></left>
+                                        <right><Label text="Xem tất cả" styleClass="see-all" BorderPane.alignment="CENTER"/></right>
+                                    </BorderPane>
+                                    <Region prefHeight="50"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <VBox fx:id="viewTKB" spacing="10" visible="false" styleClass="section-card">
+                    <Label text="LỊCH HỌC CHI TIẾT" styleClass="section-title"/>
+                    <TableView fx:id="tblTKB" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colMaLHP" text="Mã lớp" prefWidth="120"/>
+                            <TableColumn fx:id="colTenMH" text="Môn học" prefWidth="300"/>
+                            <TableColumn fx:id="colCaHoc" text="Ca học" prefWidth="100"/>
+                            <TableColumn fx:id="colPhong" text="Phòng" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                    <Button text="Xuất TKB" onAction="#handleXuatTKB"/>
+                </VBox>
+
+                <VBox fx:id="viewDiem" spacing="10" visible="false" styleClass="section-card">
+                    <Label text="KẾT QUẢ HỌC TẬP" styleClass="section-title"/>
+                    <TableView fx:id="tblDiem" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colDiemTenMH" text="Môn học" prefWidth="300"/>
+                            <TableColumn fx:id="colSoTC" text="Số TC" prefWidth="80"/>
+                            <TableColumn fx:id="colDiemSo" text="Điểm hệ 10" prefWidth="100"/>
+                            <TableColumn fx:id="colDiemChu" text="Điểm chữ" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox fx:id="viewLopMo" spacing="10" visible="false" styleClass="section-card">
+                    <Label text="ĐĂNG KÝ TRỰC TUYẾN" styleClass="section-title"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <TextField fx:id="txtMaLHPReg" promptText="Tìm môn hoặc nhập mã..." prefWidth="250" style="-fx-padding: 8;"/>
+                        <Button text="Đăng ký" onAction="#handleActionDangKy" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 8 20; -fx-cursor: hand;"/>
+                        <Button text="Rút môn" onAction="#handleActionRutMon" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 8 20; -fx-cursor: hand;"/>
+                    </HBox>
+                    <TableView fx:id="tblLopMo" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colMoMaLHP" text="Mã lớp" prefWidth="120"/>
+                            <TableColumn fx:id="colMoTenMH" text="Môn học" prefWidth="300"/>
+                            <TableColumn fx:id="colMoCa" text="Ca học" prefWidth="100"/>
+                            <TableColumn fx:id="colMoPhong" text="Phòng" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox fx:id="viewTaiChinh" spacing="10" visible="false" styleClass="section-card">
+                    <Label text="THÔNG TIN TÀI CHÍNH" styleClass="section-title"/>
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <Label text="Tình trạng công nợ:" style="-fx-font-size: 14px;"/>
+                        <Label fx:id="lblCongNoSV" text="0 đ" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #e74c3c;"/>
+                    </HBox>
+                    <TableView fx:id="tblTaiChinh" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colTCMaMH" text="Mã MH" prefWidth="100"/>
+                            <TableColumn fx:id="colTCTenMH" text="Tên môn học" prefWidth="300"/>
+                            <TableColumn fx:id="colTCSoTC" text="Số TC" prefWidth="80"/>
+                            <TableColumn fx:id="colTCDonGia" text="Đơn giá (VNĐ)" prefWidth="120"/>
+                            <TableColumn fx:id="colTCThanhTien" text="Thành tiền" prefWidth="150"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </StackPane>
+        </VBox>
+    </center>
+</BorderPane>

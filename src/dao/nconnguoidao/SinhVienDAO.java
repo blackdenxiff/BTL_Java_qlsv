@@ -272,4 +272,48 @@ public class SinhVienDAO {
         }
         return list;
     }
+
+    public List<SinhVien> findByMaKhoa(String maKhoa) {
+        List<SinhVien> list = new ArrayList<>();
+
+        String sql =
+                "SELECT sv.* FROM SinhVien sv " +
+                        "JOIN LopHanhChinh lhc ON sv.MaLop = lhc.MaLop " +
+                        "JOIN ChuongTrinhDaoTao ctdt ON lhc.MaCTDT = ctdt.MaCTDT " +
+                        "WHERE ctdt.MaKhoa = ?";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, maKhoa);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                SinhVien sv = new SinhVien();
+
+                sv.setMaSV(rs.getString("MaSV"));
+                sv.setHoDem(rs.getString("HoDem"));
+                sv.setTen(rs.getString("Ten"));
+
+                if (rs.getDate("NgaySinh") != null) {
+                    sv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                }
+
+                sv.setGioiTinh(rs.getString("GioiTinh"));
+                sv.setNamNhapHoc(rs.getInt("NamNhapHoc"));
+                sv.setMaLop(rs.getString("MaLop"));
+                sv.setSdt(rs.getString("SDT"));
+                sv.setEmail(rs.getString("Email"));
+                sv.setTrangThaiSV(rs.getString("TrangThaiSV"));
+                sv.setMaHuyen(rs.getString("MaHuyen"));
+
+                list.add(sv);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

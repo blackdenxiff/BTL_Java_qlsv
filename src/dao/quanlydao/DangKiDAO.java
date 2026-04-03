@@ -210,4 +210,20 @@ public class DangKiDAO {
         }
         return list;
     }
+
+    // --- BỔ SUNG: KIỂM TRA ĐÃ ĐĂNG KÝ MÔN NÀY CHƯA ---
+    public boolean checkDaDangKy(String maSV, String maLHP) {
+        String sql = "SELECT * FROM DangKy WHERE maSV = ? AND maLHP = ?";
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, maSV);
+            pstmt.setString(2, maLHP);
+            try (java.sql.ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // Nếu có dữ liệu trả về true
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi kiểm tra trùng đăng ký: " + e.getMessage());
+        }
+        return false;
+    }
 }
