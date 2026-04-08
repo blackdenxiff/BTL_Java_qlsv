@@ -90,5 +90,24 @@ public class testdao {
         nd.setMaSV("");
         NguoiDungDAO ndd = new NguoiDungDAO();
         ndd.insertNguoiDung(nd);
-    }
-}
+        // TẠO TÀI KHOẢN ADMIN
+        // ======== TẠO TÀI KHOẢN ADMIN ========
+        NguoiDung adminAccount = new NguoiDung();
+        adminAccount.setUsername("admin_sang"); // Tên đăng nhập
+        adminAccount.setMatKhau("123456");      // Mật khẩu
+        adminAccount.setUsertype("AD");         // Quyền Admin
+
+        // Bắt buộc phải là null
+        adminAccount.setMaSV(null);
+        adminAccount.setMaNV(null);
+
+        // Đổi tên biến thành nddAdmin để không bị trùng với code cũ của bạn
+        NguoiDungDAO nddAdmin = new NguoiDungDAO();
+
+        // Gọi hàm chạy trực tiếp, không gán vào biến boolean nữa
+        nddAdmin.insertNguoiDung(adminAccount);
+
+        System.out.println("Đã chạy lệnh tạo tài khoản Admin thành công!");
+        System.out.println("Tài khoản: admin_sang");
+        System.out.println("Mật khẩu: 123456");
+}}

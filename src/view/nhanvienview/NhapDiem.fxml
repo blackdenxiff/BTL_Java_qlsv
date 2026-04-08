@@ -5,6 +5,7 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controller.nhanvien.NhapDiemController"
+
       spacing="20"
       style="-fx-padding: 20; -fx-background-color: #f4f6f9;">
 
@@ -75,6 +76,7 @@
         <!-- BUTTON -->
         <HBox spacing="10">
             <Button text="💾 Lưu điểm" onAction="#handleSave"/>
+            <Button text="📤 Xuất Excel" onAction="#handleExport"/>
         </HBox>
 
     </VBox>

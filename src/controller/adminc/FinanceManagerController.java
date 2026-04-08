@@ -279,11 +279,48 @@ public class FinanceManagerController {
         return info;
     }
 
-    @FXML private void handleConfigPrice() { /* Logic UPSERT đơn giá cũ của bạn */ }
+    @FXML
+    private void handleConfigPrice() {
+        // 1. Hiển thị hộp thoại để Admin nhập đơn giá mới
+        TextInputDialog dialog = new TextInputDialog(String.valueOf(donGiaHienTai));
+        dialog.setTitle("Cấu hình học phí");
+        dialog.setHeaderText("Cập nhật Đơn giá tín chỉ cho HK2/2024");
+        dialog.setContentText("Vui lòng nhập đơn giá mới (VNĐ):");
+
+        // 2. Xử lý khi Admin nhấn OK
+        dialog.showAndWait().ifPresent(newPriceStr -> {
+            try {
+                // Loại bỏ các ký tự không phải số trước khi chuyển đổi
+                long newPrice = Long.parseLong(newPriceStr.replaceAll("[^\\d]", ""));
+
+                // 3. Gọi DAO để cập nhật vào Database
+                if (hocPhiDAO.updateDonGiaHeThong(2024, 2, newPrice)) {
+                    this.donGiaHienTai = newPrice;
+                    showAlert("Thành công", "Đã cập nhật đơn giá: " +
+                            currencyFormat.format(newPrice) + " đ/tín chỉ", Alert.AlertType.INFORMATION);
+
+                    // Tự động làm mới dữ liệu nếu đang tra cứu một sinh viên
+                    if (!txtMaSV.getText().isEmpty()) {
+                        handleSearchStudent();
+                    }
+                }
+            } catch (NumberFormatException e) {
+                showAlert("Lỗi", "Vui lòng chỉ nhập số tiền hợp lệ!", Alert.AlertType.ERROR);
+            }
+        });
+    }
     private void clearForm() {
-        lblTenSV.setText("..."); lblLop.setText("..."); lblTongTien.setText("0 đ");
-        lblDaNop.setText("0 đ"); lblConNo.setText("0 đ");
-        listHocPhi.clear(); listLichSu.clear();
+        lblTenSV.setText("...");
+        lblLop.setText("...");
+        lblTrangThai.setText("...");
+        lblKhoa.setText("...");
+        lblCTDT.setText("...");
+        lblCoVan.setText("...");
+        lblTongTien.setText("0 đ");
+        lblDaNop.setText("0 đ");
+        lblConNo.setText("0 đ");
+        listHocPhi.clear();
+        listLichSu.clear();
     }
     private void showAlert(String t, String c, Alert.AlertType at) {
         Alert a = new Alert(at); a.setTitle(t); a.setHeaderText(null); a.setContentText(c); a.showAndWait();

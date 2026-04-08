@@ -94,6 +94,8 @@ public class LoginController {
             // Lấy Stage (cửa sổ) hiện tại từ nút bấm
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            stage.setResizable(true);
+
             // Thay thế Scene cũ bằng Scene mới
             Scene scene = new Scene(root);
             stage.setTitle(title);

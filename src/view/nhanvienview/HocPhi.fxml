@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controller.nhanvien.HocPhiController"
-      spacing="20"
-      style="-fx-padding: 20; -fx-background-color: #f4f6f9;">
+      spacing="30"
+      alignment="TOP_CENTER"
+      style="-fx-padding: 40; -fx-background-color: transparent;">
 
-    <!-- TITLE -->
-    <Label text="TÍNH HỌC PHÍ"
-           style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+    <Label text="💰 TÍNH HỌC PHÍ SINH VIÊN"
+           style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1e3c72;"/>
 
-    <!-- FORM TÍNH HỌC PHÍ -->
-    <VBox spacing="15"
+    <VBox spacing="25"
+          maxWidth="550"
           style="-fx-background-color: white;
-                 -fx-padding: 20;
+                 -fx-padding: 40;
                  -fx-background-radius: 12;
-                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10,0,0,3);">
+                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5);">
 
-        <GridPane hgap="15" vgap="10">
+        <VBox spacing="10">
+            <Label text="Mã sinh viên:" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+            <TextField fx:id="txtMaSV" promptText="Nhập mã sinh viên cần tra cứu..."
+                       prefHeight="45"
+                       style="-fx-font-size: 15; -fx-background-radius: 6; -fx-border-color: #bdc3c7; -fx-border-radius: 6;"/>
+        </VBox>
 
-            <Label text="Mã sinh viên:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtMaSV" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+        <VBox spacing="10">
+            <Label text="Đơn giá / 1 tín chỉ (VNĐ):" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+            <TextField fx:id="txtDonGia" promptText="Ví dụ: 500000"
+                       prefHeight="45"
+                       style="-fx-font-size: 15; -fx-background-radius: 6; -fx-border-color: #bdc3c7; -fx-border-radius: 6;"/>
+        </VBox>
 
-            <Label text="Đơn giá / tín chỉ:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtDonGia" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
-
-        </GridPane>
-
-        <HBox spacing="10">
-            <Button text="💰 Tính học phí" onAction="#handleTinhHocPhi"
-                    style="-fx-background-color: #1e3c72; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+        <HBox alignment="CENTER" style="-fx-padding: 15 0 0 0;">
+            <Button text="💳 Tính Học Phí" onAction="#handleTinhHocPhi"
+                    prefHeight="50" prefWidth="250"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(231,76,60,0.4), 10,0,0,4);"/>
         </HBox>
 
     </VBox>

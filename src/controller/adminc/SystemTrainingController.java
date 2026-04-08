@@ -68,13 +68,16 @@ public class SystemTrainingController {
 
     private void handleTreeSelection(TreeItem<String> item) {
         String val = item.getValue();
-        if (val.equals("TRƯỜNG ĐẠI HỌC GTVT")) {
+        if (val.contains("TRƯỜNG ĐẠI HỌC GTVT")) {
             currentParentId = "";
-            loadTableData("KHOA", "SELECT MaKhoa, TenKhoa FROM Khoa WHERE isDeleted = 0", null, "MaKhoa", "TenKhoa");
+            // Tải dữ liệu Khoa
+            loadTableData("KHOA", "SELECT MaKhoa, TenKhoa FROM Khoa WHERE (isDeleted = 0 OR isDeleted IS NULL)",
+                    null, "MaKhoa", "TenKhoa");
         }
         else if (val.startsWith("Danh mục CTĐT")) {
             currentParentId = extractId(val);
-            loadTableData("CTDT", "SELECT MaCTDT, TenCTDT, TongTinChi, NamApDung FROM ChuongTrinhDaoTao WHERE MaKhoa = ? AND isDeleted = 0", currentParentId, "MaCTDT", "TenCTDT", "TongTinChi", "NamApDung");
+            loadTableData("CTDT", "SELECT MaCTDT, TenCTDT, TongTinChi, NamApDung FROM ChuongTrinhDaoTao WHERE MaKhoa = ? AND (isDeleted = 0 OR isDeleted IS NULL)",
+                    currentParentId, "MaCTDT", "TenCTDT", "TongTinChi", "NamApDung");
         }
         else if (val.startsWith("Danh mục Môn học")) {
             currentParentId = extractId(val);

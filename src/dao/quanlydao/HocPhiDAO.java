@@ -60,4 +60,22 @@ public class HocPhiDAO {
             return false;
         }
     }
+    public boolean updateDonGiaHeThong(int namHoc, int hocKy, long donGia) {
+        // Câu lệnh SQL: Nếu đã có thì UPDATE, nếu chưa có thì INSERT
+        String sql = "IF EXISTS (SELECT 1 FROM QuyDinhHocPhi WHERE NamHoc = ? AND HocKy = ?) " +
+                "UPDATE QuyDinhHocPhi SET DonGiaTinChi = ? WHERE NamHoc = ? AND HocKy = ? " +
+                "ELSE INSERT INTO QuyDinhHocPhi (NamHoc, HocKy, DonGiaTinChi) VALUES (?, ?, ?)";
+
+        try (Connection conn = KNDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, namHoc); ps.setInt(2, hocKy);
+            ps.setLong(3, donGia);
+            ps.setInt(4, namHoc); ps.setInt(5, hocKy);
+            ps.setInt(6, namHoc); ps.setInt(7, hocKy); ps.setLong(8, donGia);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

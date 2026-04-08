@@ -133,19 +133,20 @@ public class LopHocPhanDAO {
     // --- BỔ SUNG: LẤY THỜI KHÓA BIỂU CỦA 1 SINH VIÊN ---
     public java.util.List<java.util.Map<String, Object>> getThoiKhoaBieuSinhVien(String maSV, int hocKy, int namHoc) {
         java.util.List<java.util.Map<String, Object>> list = new java.util.ArrayList<>();
-        // JOIN 3 bảng để lấy lịch học
+
+        // ĐÃ XÓA ĐIỀU KIỆN AND lhp.HocKy = ? AND lhp.NamHoc = ?
         String sql = "SELECT lhp.MaLHP, mh.TenMH, lhp.CaHoc, lhp.PhongHoc, lhp.MaNV " +
                 "FROM DangKy dk " +
                 "INNER JOIN LopHocPhan lhp ON dk.MaLHP = lhp.MaLHP " +
                 "INNER JOIN MonHoc mh ON lhp.MaMH = mh.MaMH " +
-                "WHERE dk.MaSV = ? AND lhp.HocKy = ? AND lhp.NamHoc = ? " +
-                "AND (dk.DiemSo = 0 OR dk.DiemSo IS NULL)"; // <-- THÊM DÒNG NÀY
+                "WHERE dk.MaSV = ? AND (dk.DiemSo = 0 OR dk.DiemSo IS NULL)";
 
         try (java.sql.Connection conn = database.KNDatabase.getConnection();
              java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             pstmt.setString(1, maSV);
-            pstmt.setInt(2, hocKy);
-            pstmt.setInt(3, namHoc);
+            // Bỏ 2 dòng setInt học kỳ và năm học
+
             try (java.sql.ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     java.util.Map<String, Object> row = new java.util.HashMap<>();
@@ -162,7 +163,6 @@ public class LopHocPhanDAO {
         }
         return list;
     }
-
     // --- BỔ SUNG: XEM CÁC LỚP ĐANG MỞ TRONG KỲ ---
     public java.util.List<java.util.Map<String, Object>> getDanhSachLopMo(int hocKy, int namHoc) {
         java.util.List<java.util.Map<String, Object>> list = new java.util.ArrayList<>();

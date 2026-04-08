@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class KNDatabase {
     // Thông tin tập trung tại một nơi duy nhất
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=SQLqlsv2;encrypt=true;trustServerCertificate=true;";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=SQLqlsv;encrypt=true;trustServerCertificate=true;";
     private static final String USER = "sa";
     private static final String PASS = "123456789";
 

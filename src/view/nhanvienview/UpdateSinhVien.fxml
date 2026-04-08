@@ -37,16 +37,20 @@
             <TextField fx:id="txtGioiTinh" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
 
             <!-- 🔥 TÊN KHOA -->
-            <Label text="Tên khoa:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+            <Label text="Mã khoa:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
             <TextField fx:id="txtTenKhoa" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
 
         </GridPane>
 
         <!-- BUTTON -->
         <HBox spacing="10">
-            <Button text="🔍 Tìm kiếm" onAction="#handleTimKiem"/>
-            <Button text="➕ Thêm" onAction="#handleThem"/>
-            <Button text="✏️ Sửa" onAction="#handleSua"/>
+            <Button text="Tìm kiếm" onAction="#handleTimKiem"/>
+            <Button text="Thêm" onAction="#handleThem"/>
+            <Button text="Sửa" onAction="#handleSua"/>
+            <Button text="Theo mã khoa" onAction="#handleTimKiemTheoMaKhoa"/>
+            <Button text="Nâng cao" onAction="#handleTimKiemNangCao"/>
+            <Button text="Import" onAction="#handleImport"/>
+            <Button text="Export" onAction="#handleExport"/>
         </HBox>
 
     </VBox>

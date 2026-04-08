@@ -122,6 +122,7 @@ public class HomeNVController {
             if (!path.startsWith("/")) {
                 path = "/view/nhanvienview/" + path;
             }
+
             URL url = getClass().getResource(path);
             if (url == null) return;
 
